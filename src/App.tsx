@@ -6,8 +6,8 @@
 
 function App() {
   return (
-    <main>
-      <h1>Folio - Coming Soon</h1>
+    <main className="min-h-screen bg-black flex items-center justify-center">
+      <h1 className="text-white text-4xl font-bold">Folio - Coming Soon</h1>
     </main>
   )
 }

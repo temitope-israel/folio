@@ -14,10 +14,13 @@ import path from "path";
 // Node.js built-in module for working with file paths.
 // path.resolve() converts relative paths to absolute paths.
 
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineConfig({
   plugins: [
     react(),
     // Activates the React plugin. Without this, Vite wouldn't know how to handle JSX.
+    tailwindcss(),
   ],
 
   resolve: {
