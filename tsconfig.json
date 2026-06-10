@@ -1,0 +1,61 @@
+{
+  "compilerOptions": {
+    // === Language and Environment ====
+    "target": "ES2022",
+    // "target" tells TypeScript what version of JS to compile your code INTO.
+    // ES2022 is modern and supported by all current browsers. It enables async/await,
+    // Optional chaining (?.), nullish coalescing (??), and more.
+
+
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    // "lib" tells TypeScript which built-in type definitions to include.
+    // ES2022 => modern JS methods (Array.at()), Object.hasOwn(), etc.)
+    // DOM => browswer APIs (document, window, fetch, etc.)
+    // DOM.Iterable => allows iterating over DOM cllections with for...of
+
+
+    "module": "ESNext",
+    // "module" controls how TypeScript handles import/export.
+    // ESNext = modern ES modules (import/export syntax). Vite requires this.
+
+
+    "moduleResolution": "Bundler",
+    // Tells TypeScript how to FIND modules when you import them.
+    // "Bundler" mode matches how Vite resolves imports - it's the right choice for Vite
+
+    "jsx": "react-jsx",
+    // Tells TS how to transform JSX (the HTML-like syntax in React components)
+    // "react-jsx" uses the modern React 17+ transform - you don't need to import React at the top of every file anymore.
+
+
+    // Strictness (catching bugs before they happen) ====
+    "strict": true,
+    // Enables all strict type-checking options in one switch.
+    // This catches: null pointer errors, implicit "any" types, missing return values,
+    // Strict mode makes me a better dev.
+
+    "noUnusedLocals": true,
+    // TS will error if you declare a variable and never use it.
+    // Forces clean code - no ghost variable sitting around.
+
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    // In switch statements, forces every case to either break or return.
+    // Prevents accidental "fall-through" bugs.
+
+    "ignoreDeprecations": "6.0",
+    // === path Aliases ====
+    "baseUrl": ".",
+    // Sets the base dir for resolving path aliases.
+    // "." means the root of the project (where tsconfig.json lives).
+
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+    // It means: whenever you write @/something, TypeScript will look in ./src/something
+    // Without this, you'd write: import Button from "../../components/shared/Button"
+
+  },
+  "include": ["src"]
+  // Only type-check files inside src/folder
+}
