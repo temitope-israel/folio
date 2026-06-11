@@ -12,7 +12,7 @@ import {createRoot} from 'react-dom/client';
 // createRoot is the React 19 API for mounting app into the HTML page.
 // "Mounting" means take your React components and inject them into real DOM elements.
 
-import "./index.css";
+import "./index.css"
 // Imports global stylesheet
 
 import App from "./App";

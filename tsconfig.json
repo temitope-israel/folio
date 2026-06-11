@@ -56,6 +56,6 @@
     // Without this, you'd write: import Button from "../../components/shared/Button"
 
   },
-  "include": ["src"]
+  "include": ["src", "vite-env.d.ts"]
   // Only type-check files inside src/folder
 }
