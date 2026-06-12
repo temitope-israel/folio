@@ -1,131 +1,573 @@
+/* 1. NATIVE FONTS ABSOLUTE TOP */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:ital,opsz,wght@0,12..96,300..800&family=Inter:ital,opsz,wght@0,14..32,100..900&display=swap");
+
+/* 2. TAILWIND ENGINE NEXT */
 @import "tailwindcss";
+
+/* 3. PLUGIN EXTENSIONS LAST */
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
 
-@custom-variant dark (&:is(.dark *));
+/* DESIGN SYSTEM - @theme - Every design token for this app lives here. Variable defined here become Tailwind utility classes.*/
 
-@theme inline {
-    --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif;
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
-    --color-chart-5: var(--chart-5);
-    --color-chart-4: var(--chart-4);
-    --color-chart-3: var(--chart-3);
-    --color-chart-2: var(--chart-2);
-    --color-chart-1: var(--chart-1);
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
-    --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
-}
+@theme {
+  --color-bg-base: #0D0D0D;
+  --color-bg-surface: #141414;
+  --color-bg-border: #242424;
+  /* Brand colors - Nigerian green */
+  --color-brand: #00A86B;
+  --color-brand-dark: #007A4D;
 
-:root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
-}
+  /* Premium accent */
+  --color-gold: #F0B429;
+  --color-gold-dark:  #D4981F;
+  /* Hover state for gold elements */
 
-.dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+  /* Text scale */
+  --color-text-primary:   #F5F5F5;
+  /* Near white. Used for: headings, important body text */
+
+  --color-text-secondary: #A3A3A3;
+  /* Medium grey. Used for: body text, descriptions, labels */
+
+  --color-text-muted:     #6B6B6B;
+  /* Dark grey. Used for: captions, timestamps, secondary metadata */
+
+    /* Utility colors */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* Status colors */
+  --color-success: #22C55E;
+  --color-error:   #EF4444;
+  --color-warning: #F59E0B;
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY
+     ---------------------------------------------------------- */
+
+  --font-display: "Bricolage Grotesque", sans-serif;
+  /* font-display → used for all headings, the hero tagline, section titles.*/
+
+  --font-body: "Inter", sans-serif;
+  /* font-body → used for all body text, paragraphs, labels, UI text. */
+
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  /* font-mono → used for code snippets if we display any.
+     Falls back to Fira Code, then the system monospace font. */
+
+       /* ----------------------------------------------------------
+     BORDER RADIUS
+     ---------------------------------------------------------- */
+
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+  /* radius-full → perfect circle/pill shape.
+     9999px is larger than any element will ever be,
+     so it always produces a fully rounded shape. */
+
+
+
+       /* ----------------------------------------------------------
+     ANIMATIONS — @keyframes and durations
+     ---------------------------------------------------------- */
+
+  /* Animation durations — used with Tailwind's duration-* classes */
+  --animate-fast:   150ms;
+  --animate-normal: 300ms;
+  --animate-slow:   600ms;
+
+  /* Marquee animation for the TechStack section (Day 11).
+     The marquee works by duplicating the list of items and
+     translating the container from 0% to -50%.
+     At -50%, the second copy aligns exactly with where the
+     first copy started — creating a seamless infinite loop. */
+  --animate-marquee: marquee 30s linear infinite;
+  /* marquee        → the @keyframes name (defined below in @layer)
+     30s            → takes 30 seconds to complete one loop
+     linear         → constant speed (no ease in/out — it would look jerky)
+     infinite       → loops forever */
+
+  --animate-marquee-reverse: marquee-reverse 30s linear infinite;
+  /* Same as above but runs in the opposite direction.
+     Used for the second row in the TechStack marquee. */
+
+  /* Fade in animation for the preloader and general reveals */
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  /* fade-in  → the @keyframes name
+     0.6s     → duration
+     ease-out → starts fast, decelerates to a stop (natural feel)
+     forwards → after the animation ends, keep the final state (opacity: 1)
+                Without forwards, it would snap back to opacity: 0 */
+
+    /* Pulse animation for the availability badge in the Navbar */
+  --animate-pulse-badge: pulse-badge 2s ease-in-out infinite;
+
+
+  /* ----------------------------------------------------------
+     CUSTOM SPACING (extends Tailwind's default scale)
+     ---------------------------------------------------------- */
+
+  /* Section padding — consistent vertical rhythm across all sections */
+  --spacing-section: 120px;
+  /* spacing-section → py-section on sections gives 120px top and bottom padding.
+     This creates the visual breathing room between sections. */
+
+  --spacing-container: 1280px;
+  /* The max width of content containers — matches Tailwind's max-w-7xl (1280px).
+     We define it here so it's part of our design system. */
+
+/* ============================================================
+   4. BASE STYLES
+   ============================================================
+   @layer base → sets default styles on raw HTML elements.
+   These run BEFORE component and utility styles.
+   Think of it as your site-wide reset and defaults. */
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
+
+  /* Universal box model fix.
+     By default, CSS adds padding and border to an element's width.
+     So a 200px div with 20px padding becomes 240px wide — confusing.
+     box-sizing: border-box makes padding and border INCLUDED in the width.
+     A 200px div with 20px padding stays 200px wide. */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    /* *        → every element */
+  }
+
   html {
-    @apply font-sans;
-    }
+    /* scroll-behavior: smooth makes anchor link clicks (#about, #projects)
+       animate smoothly instead of jumping instantly.*/
+    scroll-behavior: smooth;
+
+    /* Prevents layout shift when a scrollbar appears/disappears.
+       scrollbar-gutter: stable reserves space for the scrollbar permanently,
+       so the page doesn't jump when content becomes longer than the viewport. */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    /* Apply our design system tokens to the body element */
+    background-color: var(--color-bg-base);
+
+    color: var(--color-text-primary);
+    /* Default text color for everything on the page */
+
+    font-family: var(--font-body);
+    /* Inter for all body text */
+
+    /* antialiased text rendering — makes text look sharper on screens.
+       -webkit-font-smoothing: antialiased → Chrome, Safari, Edge
+       -moz-osx-font-smoothing: grayscale  → Firefox on macOS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Prevent horizontal scroll — important for mobile.
+       overflow-x: hidden clips anything that overflows the viewport width. */
+    overflow-x: hidden;
+
+    /* min-h-svh (small viewport height) instead of min-h-screen.
+       On mobile browsers, 100vh includes the browser chrome (address bar).
+       svh = "small viewport height" = excludes the browser chrome.
+       This prevents the classic mobile viewport height bug. */
+    min-height: 100svh;
+  }
+
+  /* Heading defaults — apply display font to all heading levels */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    /* Bricolage Grotesque for all headings */
+    font-weight: 700;
+    /* Bold by default */
+    line-height: 1.1;
+    /* Tight line height for headings — looks better for large display text.
+       line-height: 1.1 means each line is 1.1× the font size.
+       For a 64px h1, line height = 70.4px. */
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+    /* Slightly tighter letter spacing for headings.
+       -0.02em = -2% of the font size.
+       For 64px text: -0.02 × 64 = -1.28px tighter.
+       Tight tracking looks more premium on large display text. */
+  }
+
+  /* Paragraph defaults */
+  p {
+    line-height: 1.7;
+    /* Comfortable reading line height for body text.
+       1.7 = each line is 1.7× the font size — roomy and readable. */
+    color: var(--color-text-secondary);
+  }
+
+  /* Link defaults */
+  a {
+    color: inherit;
+    /* inherit → links take the color of their parent element by default.
+       We override this per-component when needed. */
+    text-decoration: none;
+    /* Remove the default underline from links.
+       We'll add our own hover effects per component. */
+  }
+
+  /* Image defaults */
+  img, video {
+    max-width: 100%;
+    /* Prevents images/videos from overflowing their container.
+       An image wider than its container would break the layout.
+       max-width: 100% caps the image at its container's width. */
+    display: block;
+    /* Images are inline by default, which creates a small gap below them
+       (because of descender space for letters like g, y, p).
+       display: block removes that gap. */
+  }
+
+  /* Remove default list styling */
+  ul, ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* Browser default styles add bullets and indentation to lists.
+       We remove them all here and add styling per-component. */
+  }
+
+  /* Button reset — remove browser default button styles */
+  button {
+    cursor: pointer;
+    /* Make it obvious buttons are clickable */
+    border: none;
+    background: none;
+    padding: 0;
+    font-family: inherit;
+    /* inherit the font from the parent — otherwise buttons use the
+       browser's default system font instead of Inter */
+  }
+
+  /* Custom scrollbar styling — Webkit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 6px;
+    /* Make the scrollbar thin and minimal */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-base);
+    /* The track (the background rail of the scrollbar) matches our page background */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-bg-border);
+    /* The thumb (the draggable part) uses our border color */
+    border-radius: var(--radius-full);
+    /* Fully rounded thumb */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand);
+    /* Turns brand green on hover — a subtle but premium detail */
+  }
+
+  /* Text selection color */
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-white);
+    /* When you click and drag to select text, the highlight will be
+       brand green with white text — on-brand even at this micro level */
+  }
 }
+
+
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================
+   @keyframes defines the animation sequence — what changes at each point.
+   These are referenced by the --animate-* variables in @theme above. */
+
+@keyframes marquee {
+  /* The marquee scrolls from its natural position to -50%.
+     We use -50% because the list is duplicated — it's twice as long
+     as it appears. When we've scrolled 50%, the duplicate aligns
+     perfectly with the original start position → seamless loop. */
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  /* Reverse direction — starts at -50%, ends at 0% */
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0%); }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+    /* Starts invisible and 16px below its final position */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+    /* Ends fully visible at its natural position */
+  }
+}
+
+@keyframes pulse-badge {
+  /* The availability badge in the Navbar pulses to draw attention */
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.95);
+    /* At the midpoint: slightly faded and slightly smaller */
+  }
+}
+
+
+/* ============================================================
+   COMPONENT STYLES
+   ============================================================
+   @layer components → reusable class patterns.
+   These are multi-property classes you can apply with one class name.
+   Think of these as your design system's "building blocks". */
+
+@layer components {
+
+  /* Container — centers content with max width and horizontal padding */
+  .container-custom {
+    width: 100%;
+    max-width: var(--spacing-container);
+    /* Never wider than 1280px */
+    margin-left: auto;
+    margin-right: auto;
+    /* auto margins center the container horizontally */
+    padding-left: 24px;
+    padding-right: 24px;
+    /* 24px side padding on mobile */
+  }
+
+  @media (min-width: 768px) {
+    /* @media (min-width: 768px) → styles inside apply only when the
+       screen is 768px wide or wider. This is Tailwind's `md` breakpoint.
+       Responsive design: mobile styles first, then override for larger screens. */
+    .container-custom {
+      padding-left: 40px;
+      padding-right: 40px;
+      /* More padding on tablet and above */
+    }
+  }
+
+  @media (min-width: 1280px) {
+    /* xl breakpoint — 1280px+ */
+    .container-custom {
+      padding-left: 80px;
+      padding-right: 80px;
+      /* Generous padding on large screens */
+    }
+  }
+
+  /* Section padding — consistent vertical spacing for all sections */
+  .section-padding {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+    /* 120px top and bottom for every section.
+       This creates a consistent vertical rhythm across the page. */
+  }
+
+  /* Gradient text — the brand green gradient used on key words */
+  .text-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--color-brand) 0%,
+      var(--color-gold) 100%
+    );
+    /* linear-gradient creates a smooth transition between two colors.
+       135deg → the gradient runs diagonally (top-left to bottom-right).
+       0% → where the first color starts.
+       100% → where the second color ends. */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* background-clip: text clips the gradient to the shape of the text.
+       Without this, the gradient fills the element's box (rectangle).
+       With it, the gradient shows only through the text characters. */
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    /* Make the text itself transparent so the gradient shows through.
+       -webkit-text-fill-color is needed for Safari compatibility. */
+  }
+
+  /* Card — the base card style used across services, projects, etc. */
+  .card {
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-bg-border);
+    border-radius: var(--radius-lg);
+    /* 12px rounded corners */
+    padding: 24px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    /* transition defines what to animate on state change (hover, focus).
+       border-color 0.3s ease → border color animates over 0.3 seconds.
+       transform 0.3s ease    → position/scale animates over 0.3 seconds.
+       ease = starts slow, speeds up, slows down at end (natural feel). */
+  }
+
+  .card:hover {
+    border-color: var(--color-brand);
+    /* On hover: border turns brand green */
+    transform: translateY(-4px);
+    /* On hover: card lifts 4px upward.
+       translateY(-4px) = move 4px in the negative Y direction = upward. */
+  }
+
+  /* Tag / pill — used for technology tags on project cards */
+  .tag {
+    display: inline-flex;
+    /* inline-flex → sits inline (like text) but uses flexbox internally.
+       This lets us center the text inside the pill perfectly. */
+    align-items: center;
+    padding: 4px 10px;
+    /* 4px top/bottom, 10px left/right */
+    background-color: var(--color-bg-border);
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    /* Pill shape */
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+    /* transition: all → animate ALL CSS properties on change.
+       Use sparingly — "all" can be performance-heavy on complex elements.
+       Fine for small elements like tags. */
+  }
+
+  .tag:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+  }
+
+  /* Button variants */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    /* gap adds space between flex children — here between icon and text */
+    padding: 12px 28px;
+    background-color: var(--color-brand);
+    color: var(--color-white);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 15px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+    /* nowrap prevents button text from wrapping to a second line */
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-brand-dark);
+    transform: translateY(-2px);
+    /* Subtle lift on hover */
+  }
+
+  .btn-primary:active {
+    transform: translateY(0px);
+    /* On click: snap back to original position.
+       This gives tactile feedback — the button "presses down". */
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-bg-border);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 15px;
+    transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline:active {
+    transform: translateY(0px);
+  }
+}
+
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================
+   @layer utilities → single-purpose classes not covered by Tailwind.
+   These extend Tailwind's utility system with custom one-liners. */
+
+@layer utilities {
+
+  /* Visually hidden — hides element visually but keeps it accessible.
+     Screen readers can still read it. Used for accessibility labels. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Marquee pause on hover — stops the TechStack marquee when user hovers */
+  .marquee-pause:hover .marquee-track {
+    animation-play-state: paused;
+    /* animation-play-state: paused → freezes the animation in place.
+       We target .marquee-track inside .marquee-pause.
+       When the user hovers the container, the inner track pauses. */
+  }
+
+  /* No scrollbar — hide scrollbar visually but keep scroll functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    /* scrollbar-width: none → Firefox way to hide scrollbar */
+  }
+
+  /* Balance text — improves heading line breaks */
+  .text-balance {
+    text-wrap: balance;
+    /* text-wrap: balance → distributes text evenly across lines.
+       Without it, a 3-line heading might have:
+         "I build things"
+         "that work"
+         "."
+       With balance, TypeScript tries to make lines similar length:
+         "I build"
+         "things that"
+         "work." */
+  }
+
+  /* Clip text — used for gradient text (pairs with .text-gradient) */
+  .clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+
 
