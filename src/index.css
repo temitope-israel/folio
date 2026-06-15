@@ -278,6 +278,19 @@
     /* When you click and drag to select text, the highlight will be
        brand green with white text — on-brand even at this micro level */
   }
+
+/* Hide default cursor on desktop when custom cursor is active */
+@media (hover: hover) {
+  /* (hover: hover) → applies only to devices with a real pointer (mouse/trackpad).
+     Touch devices don't get this rule — they keep normal touch behavior. */
+  * {
+    cursor: none !important;
+    /* cursor: none → hides the default browser cursor completely.
+       !important → overrides any component-level cursor styles.
+       Without !important, elements like links set cursor: pointer
+       which would make the default cursor reappear over them. */
+  }
+}
 }
 
 
