@@ -11,26 +11,26 @@
 /* DESIGN SYSTEM - @theme - Every design token for this app lives here. Variable defined here become Tailwind utility classes.*/
 
 @theme {
-  --color-bg-base: #0D0D0D;
-  --color-bg-surface: #141414;
-  --color-bg-border: #242424;
+  --color-bg-base: #0A0E14;
+  --color-bg-surface: #111722;
+  --color-bg-border: #1F2733;
   /* Brand colors - Nigerian green */
-  --color-brand: #00A86B;
-  --color-brand-dark: #007A4D;
+  --color-brand: #2D6FE0;
+  --color-brand-dark: #1E4FAE;
 
   /* Premium accent */
-  --color-gold: #F0B429;
-  --color-gold-dark:  #D4981F;
+  --color-gold: #F2A93B;
+  --color-gold-dark:  #D6901F;
   /* Hover state for gold elements */
 
   /* Text scale */
-  --color-text-primary:   #F5F5F5;
+  --color-text-primary:   #F4F6F9;
   /* Near white. Used for: headings, important body text */
 
-  --color-text-secondary: #A3A3A3;
+  --color-text-secondary: #9AA4B2;
   /* Medium grey. Used for: body text, descriptions, labels */
 
-  --color-text-muted:     #6B6B6B;
+  --color-text-muted:     #5C6675;
   /* Dark grey. Used for: captions, timestamps, secondary metadata */
 
     /* Utility colors */
