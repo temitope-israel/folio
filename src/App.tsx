@@ -1,130 +1,121 @@
 // src/App.tsx
+import { useState } from "react";
+// useState → to track whether the preloader is still showing
+
+import { AnimatePresence, motion } from "framer-motion";
+// AnimatePresence → enables exit animations when Preloader is removed
 
 import { useLenis } from "@/hooks/useLenis";
-import CustomCursor from "./components/shared/CustomCursor";
+import CustomCursor from "@/components/shared/CustomCursor";
+import Preloader from "@/components/shared/Preloader";
+// import Navbar from "@/components/layout/Navbar";
 import { personalInfo } from "@/data";
-// Root component of my entire React Application
-// Every section of the folio app will eventually be imported and rendered here.
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  // isLoading starts as true — the preloader shows immediately.
+  // When setIsLoading(false) is called, the preloader exits.
+
   useLenis();
+  // Initialize smooth scroll. Runs regardless of loading state —
+  // Lenis sets up in the background while preloader is visible.
+
   return (
     <>
       <CustomCursor />
-      <main className="min-h-screen bg-bg-base">
-        <div className="container-customer section-padding">
-          <h1 className="text-6xl font-bold text-text-primary mb-4">
-            {personalInfo.name}
-          </h1>
-          <h2 className="text-3xl font-semibold text-text-secondary mb-2">
-            {personalInfo.title}
-          </h2>
-          <p className="text-text-muted mb-12">{personalInfo.location}</p>
+      {/*
+        CustomCursor sits outside AnimatePresence — it renders
+        immediately and persists regardless of loading state.
+        This is why it must be OUTSIDE the AnimatePresence block.
+      */}
 
-          <h2 className="text-gradient text-5xl font-bold mb-12">
-            {personalInfo.tagline}
-          </h2>
+      <AnimatePresence mode="wait">
+        {/*
+          mode="wait" → when a child exits, AnimatePresence waits for the
+          exit animation to FULLY complete before rendering the entering element.
 
-          <div className="flex gap-4 mb-12">
-            <button className="btn-primary">View Projects</button>
-            <button className="btn-outline">Download Resume</button>
-          </div>
+          Other modes:
+          mode="sync"      → exit and enter animations run simultaneously (default)
+          mode="popLayout" → used for layout animations (not needed here)
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {["Frontend Dev", "Full-Stack", "API Design"].map((title) => (
-              <div key={title} className="card">
-                <h3 className="text-text-primary font-semibold mb-2">
-                  {title}
-                </h3>
-                <p className="text-text-muted text-sm">
-                  Sample card for a design system testing
+          We use "wait" so the preloader fully fades out before the
+          main content appears — clean sequential transition.
+        */}
+
+        {isLoading ? (
+          <Preloader
+            key="preloader"
+            // key is REQUIRED by AnimatePresence to track this element.
+            // When isLoading changes from true to false, AnimatePresence
+            // sees the key "preloader" disappear and triggers the exit animation.
+
+            onComplete={() => setIsLoading(false)}
+            // When Preloader calls onComplete(), we set isLoading to false.
+            // This removes the Preloader from the JSX tree.
+            // AnimatePresence intercepts, runs the exit animation, then
+            // removes it from the DOM.
+            // () => setIsLoading(false) is an arrow function:
+            // "when called with no arguments, run setIsLoading(false)"
+          />
+        ) : (
+          <motion.div
+            key="main"
+            // Different key from "preloader" — AnimatePresence treats this
+            // as a new element entering when "preloader" exits.
+
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            // The main content fades in after the preloader exits.
+            // Simple fade — the preloader's exit is the star, not this entrance.
+          >
+            {/* <Navbar /> */}
+            {/* Navbar is inside motion.div so it animates in with the content */}
+
+            <main className="min-h-screen bg-bg-base pt-16 md:pt-20">
+              {/*
+                pt-16    → padding-top: 64px (matches navbar h-16 on mobile)
+                md:pt-20 → padding-top: 80px (matches navbar md:h-20 on desktop)
+                This prevents content from hiding behind the fixed navbar.
+              */}
+              <div className="container-custom section-padding">
+                <h1 className="text-6xl font-bold text-text-primary mb-4 text-balance">
+                  {personalInfo.tagline}
+                </h1>
+                <p className="text-text-secondary text-xl mb-12 max-w-2xl">
+                  {personalInfo.subTagline} — {personalInfo.title} based in{" "}
+                  {personalInfo.location}.
                 </p>
-              </div>
-            ))}
-          </div>
-
-          {/* TAG TEST */}
-          <div className="flex flex-wrap gap-2 mb-12">
-            {[
-              "React",
-              "TypeScript",
-              "Node.js",
-              "PostgreSQL",
-              "Tailwind CSS",
-            ].map((tag) => (
-              <span key={tag} className="tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {/* COLOR PALETTE SWATCHES */}
-          {/* Scroll test — add enough content to make the page scrollable */}
-          <h1 className="text-6xl font-bold text-text-primary mb-4 text-balance">
-            {personalInfo.tagline}
-          </h1>
-
-          <p className="text-text-secondary text-xl mb-12 max-w-2xl">
-            {/*
-              max-w-2xl → max-width: 42rem (672px)
-              Constrains the paragraph width for comfortable reading.
-              Long lines of text are hard to read — we limit to ~65 characters.
-            */}
-            {personalInfo.subTagline} — {personalInfo.title} based in{" "}
-            {personalInfo.location}.
-          </p>
-
-          <div className="flex gap-4 mb-16">
-            <a href="#projects" className="btn-primary">
-              View Projects
-            </a>
-            <a href={personalInfo.resumeUrl} className="btn-outline">
-              Download CV
-            </a>
-          </div>
-
-          {/* Filler sections to test smooth scroll */}
-          {["About", "Projects", "Services", "Contact"].map((section) => (
-            <section
-              key={section}
-              id={section.toLowerCase()}
-              className="section-padding border-t border-bg-border"
-              /*
-                border-t          → border-top-width: 1px
-                border-bg-border  → border-color: var(--color-bg-border) → #242424
-                The two classes together create a subtle top border separator.
-              */
-            >
-              <h2 className="text-4xl font-bold text-text-primary mb-4">
-                {section}
-              </h2>
-              <p className="text-text-secondary">
-                This section is coming soon. Scroll to test Lenis smooth scroll.
-              </p>
-            </section>
-          ))}
-          <div>
-            {[
-              { name: "bg-base", color: "bg-bg-base", border: true },
-              { name: "bg-surface", color: "bg-bg-surface", border: true },
-              { name: "bg-border", color: "bg-bg-border", border: false },
-              { name: "brand", color: "bg-brand", border: false },
-              { name: "gold", color: "bg-gold", border: false },
-            ].map(({ name, color, border }) => (
-              <div key={name} className="flex flex-col items-center gap-1">
-                <div
-                  className={`w-12 h-12 rounded-lg ${color} ${border ? "border-bg-border" : ""}`}
-                >
-                  <span className="text-text-muted text-xs">{name}</span>
+                <div className="flex gap-4 mb-16">
+                  <a href="#projects" className="btn-primary">
+                    View Projects
+                  </a>
+                  <a href={personalInfo.resumeUrl} className="btn-outline">
+                    Download CV
+                  </a>
                 </div>
+
+                {["About", "Projects", "Services", "Contact"].map((section) => (
+                  <section
+                    key={section}
+                    id={section.toLowerCase()}
+                    className="section-padding border-t border-bg-border"
+                  >
+                    <h2 className="text-4xl font-bold text-text-primary mb-4">
+                      {section}
+                    </h2>
+                    <p className="text-text-secondary">
+                      This section coming soon.
+                    </p>
+                  </section>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </main>
+            </main>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
 
-// App is exported so that main.tsx can import it and render it into the DOM
 export default App;

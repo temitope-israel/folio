@@ -78,7 +78,7 @@ export function useLenis (){
     // We store the frame ID in a variable so we can cancel it in cleanup.
     // number => RAF returns a numeric ID.
 
-    function raf(time: number) {
+    const raf =(time: number)  =>{
         // This function runs on every animation frame (~60 times per second)
       // time → the timestamp passed by requestAnimationFrame (in milliseconds)
       //        it increases continuously as the page runs
