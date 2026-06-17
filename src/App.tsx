@@ -1,76 +1,33 @@
 // src/App.tsx
 import { useState } from "react";
-// useState → to track whether the preloader is still showing
-
 import { AnimatePresence, motion } from "framer-motion";
-// AnimatePresence → enables exit animations when Preloader is removed
-
 import { useLenis } from "@/hooks/useLenis";
 import CustomCursor from "@/components/shared/CustomCursor";
 import Preloader from "@/components/shared/Preloader";
-// import Navbar from "@/components/layout/Navbar";
+import Navbar from "@/components/layout/Navbar";
+// Import the Navbar component
 import { personalInfo } from "@/data";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  // isLoading starts as true — the preloader shows immediately.
-  // When setIsLoading(false) is called, the preloader exits.
-
   useLenis();
-  // Initialize smooth scroll. Runs regardless of loading state —
-  // Lenis sets up in the background while preloader is visible.
 
   return (
     <>
       <CustomCursor />
-      {/*
-        CustomCursor sits outside AnimatePresence — it renders
-        immediately and persists regardless of loading state.
-        This is why it must be OUTSIDE the AnimatePresence block.
-      */}
 
       <AnimatePresence mode="wait">
-        {/*
-          mode="wait" → when a child exits, AnimatePresence waits for the
-          exit animation to FULLY complete before rendering the entering element.
-
-          Other modes:
-          mode="sync"      → exit and enter animations run simultaneously (default)
-          mode="popLayout" → used for layout animations (not needed here)
-
-          We use "wait" so the preloader fully fades out before the
-          main content appears — clean sequential transition.
-        */}
-
         {isLoading ? (
-          <Preloader
-            key="preloader"
-            // key is REQUIRED by AnimatePresence to track this element.
-            // When isLoading changes from true to false, AnimatePresence
-            // sees the key "preloader" disappear and triggers the exit animation.
-
-            onComplete={() => setIsLoading(false)}
-            // When Preloader calls onComplete(), we set isLoading to false.
-            // This removes the Preloader from the JSX tree.
-            // AnimatePresence intercepts, runs the exit animation, then
-            // removes it from the DOM.
-            // () => setIsLoading(false) is an arrow function:
-            // "when called with no arguments, run setIsLoading(false)"
-          />
+          <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
         ) : (
           <motion.div
             key="main"
-            // Different key from "preloader" — AnimatePresence treats this
-            // as a new element entering when "preloader" exits.
-
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            // The main content fades in after the preloader exits.
-            // Simple fade — the preloader's exit is the star, not this entrance.
           >
-            {/* <Navbar /> */}
-            {/* Navbar is inside motion.div so it animates in with the content */}
+            <Navbar />
+            {/* Navbar is inside motion.div so it animates in WITH the content */}
 
             <main className="min-h-screen bg-bg-base pt-16 md:pt-20">
               {/*
@@ -94,7 +51,6 @@ function App() {
                     Download CV
                   </a>
                 </div>
-
                 {["About", "Projects", "Services", "Contact"].map((section) => (
                   <section
                     key={section}
