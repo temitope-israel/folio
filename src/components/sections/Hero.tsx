@@ -26,6 +26,11 @@ import { personalInfo, heroStats, projects, socialLinks } from "@/data";
 // projects     → to count featured/live projects
 // socialLinks  → GitHub, LinkedIn, etc.
 
+import { SiGithub } from "react-icons/si";
+// SiGithub → GitHub logo from the Simple Icons set (react-icons).
+// Simple Icons are brand-accurate logo marks, separate from Lucide's
+// generic UI icon style. Convention: Si prefix = "Simple Icons".
+
 import { cn } from "@/lib/utils";
 // cn() → our class name utility (clsx + tailwind-merge)
 
@@ -329,7 +334,7 @@ export default function Hero() {
                 */
                 className="btn-outline flex items-center gap-2"
               >
-                GitHub
+                <SiGithub size={16} /> GitHub
               </a>
             </motion.div>
 
@@ -484,7 +489,7 @@ export default function Hero() {
                 {/* GitHub row */}
                 <div className="flex items-center gap-3 text-sm">
                   <div className="w-8 h-8 rounded-lg bg-bg-border flex items-center justify-center flex-shrink-0">
-                    
+                    <SiGithub size={16} />
                   </div>
                   <div>
                     <p className="text-text-muted text-xs">GitHub</p>
