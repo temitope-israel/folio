@@ -13,7 +13,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Download, Circle } from "lucide-react";
+import { Download } from "lucide-react";
 // Download → icon for the resume button
 // Circle   → icon for the availability badge dot
 
@@ -54,7 +54,7 @@ export default function Navbar() {
   // --------------------------------------------------------
   // Mobile menu state
   // --------------------------------------------------------
-  const [menuOpen, setMenuOpen] = useState(false);
+  //const [menuOpen, setMenuOpen] = useState(false);
   // We'll build the mobile menu toggle on Day 25 (responsiveness).
   // For now we track the state — the toggle logic comes later.
 

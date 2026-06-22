@@ -8,7 +8,7 @@ import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/sections/Hero";
 // Import the Hero section
 
-import { personalInfo } from "@/data";
+//import { personalInfo } from "@/data";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);

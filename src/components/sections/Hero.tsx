@@ -11,8 +11,13 @@
 // useScroll + useTransform for parallax on the visual column.
 // ============================================================
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+// useRef => needed to scope useScroll to the Hero Section specifically
+
+import { motion, useTransform } from "framer-motion";
 // motion → Framer Motion animatable elements
+// useScroll => tracks scroll progress
+// useTransform => maps scroll progress to animation values
 
 import { ArrowRight, MapPin, Briefcase } from "lucide-react";
 // ArrowRight → CTA button icon
@@ -20,7 +25,7 @@ import { ArrowRight, MapPin, Briefcase } from "lucide-react";
 // MapPin     → location indicator
 // Briefcase  → availability indicator
 
-import { personalInfo, heroStats, projects, socialLinks } from "@/data";
+import { personalInfo, heroStats, projects } from "@/data";
 // personalInfo → name, title, tagline, location, etc.
 // heroStats    → the four stat items (years, projects, etc.)
 // projects     → to count featured/live projects
@@ -33,6 +38,9 @@ import { SiGithub } from "react-icons/si";
 
 import { cn } from "@/lib/utils";
 // cn() → our class name utility (clsx + tailwind-merge)
+
+import { useTextScramble } from "@/hooks/useTextScramble";
+import { useLenisScroll } from "@/hooks/useLenisScroll";
 
 // ============================================================
 // ANIMATION VARIANTS
@@ -102,11 +110,71 @@ export default function Hero() {
   // .length → count how many items are in the filtered array.
   // Result: 2 (Nexus Pay and LagoNest are both "live")
 
+  // ====================================
+  // SCROLL TRACKING = FOR PARALLAX EFFECTS
+  // ====================================
+  const sectionRef = useRef<HTMLElement>(null);
+  // Reference to the <section> element - we'll scope scroll tracking to it.
+
+
+  // Identical API — returns a MotionValue from 0 to 1.
+  // All the useTransform calls below work exactly the same.
+  // The only difference is this reads from Lenis instead of
+  // native browser scroll, so it actually fires correctly.
+
+ const scrollYProgress = useLenisScroll(sectionRef);
+
+
+
+  // ==============================================
+  // PARALLAX TRANSFORMS
+  // ==============================================
+
+  const blobOneY = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  // Top-left blob moves DOWN by up to 150px as you scroll through Hero.
+  // Background elements typically move MORE than foreground content
+  // in parallax — creates the illusion they're "behind" everything else.
+
+  const blobTwoY = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  // Bottom-right blob moves UP by up to 100px — opposite direction
+  // from blobOne. Mixing directions makes the effect feel more organic
+  // and less mechanical than everything moving the same way.
+
+  const cardY = useTransform(scrollYProgress, [0, 1], [0, 160]);
+  // The visual card on the right moves down by up to 80px.
+  // Less movement than the blobs (80px vs 150px) — the card is
+  // "closer" to the viewer than the background blobs, so it should
+  // move less for the parallax depth illusion to work correctly.
+
+  const cardOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  // The card fades out as you scroll. Input range [0, 0.8] means:
+  // at scrollYProgress 0   → opacity 1 (fully visible)
+  // at scrollYProgress 0.8 → opacity 0 (fully faded)
+  // at scrollYProgress 1   → STILL 0 (useTransform clamps outside the range
+  //                          by default — it doesn't go negative)
+  // This fades the card out before the user fully scrolls past Hero,
+  // so it doesn't awkwardly "pop" away.
+
+  const scrambledHeadline = useTextScramble({
+    text: "I build things",
+    trigger: true,
+    // Starts immediately when the Hero mounts (after the preloader exits
+    // and the page fades in — Hero only mounts once isLoading is false)
+    speed: 35,
+    // 35ms between ticks — slightly slower than default for a more
+    // readable, deliberate decode effect (not too frantic)
+    revealDelay: 3,
+    // Lock in one new correct character every 3 ticks (~105ms per character)
+    // With "I build things" (14 characters), total reveal time ≈ 1.5 seconds
+  });
+
   return (
     <section
-      id="home"
-      className="relative min-h-screen flex items-center overflow-hidden pt-16 md:pt-20"
-      /*
+    ref={sectionRef}
+    // Attach the ref here  - useScroll above reads from this element
+    id="home"
+    className="relative min-h-screen flex items-center pt-16 md:pt-20"
+    /*
         relative        → positioning context for decorative absolute elements
         min-h-screen    → at least 100vh tall — fills the viewport
         flex items-center → vertically center the content grid
@@ -114,6 +182,7 @@ export default function Hero() {
         pt-16 md:pt-20  → top padding to clear the fixed navbar
       */
     >
+
       {/* --------------------------------------------------------
           DECORATIVE BACKGROUND ELEMENTS
           These are purely visual — blurred color blobs that add
@@ -122,7 +191,7 @@ export default function Hero() {
       -------------------------------------------------------- */}
 
       {/* Top-left blob — brand blue */}
-      <div
+      <motion.div
         className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full opacity-[0.07] blur-[120px] bg-brand pointer-events-none"
         /*
           absolute          → removed from flow, positioned relative to section
@@ -137,10 +206,14 @@ export default function Hero() {
           pointer-events-none → mouse events pass through — can't accidentally
                                 "click" on a decorative blob
         */
+        style={{ y: blobOneY } as any}
       />
 
       {/* Bottom-right blob — gold/amber */}
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full opacity-[0.05] blur-[100px] bg-gold pointer-events-none" />
+      <motion.div
+        className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full opacity-[0.05] blur-[100px] bg-gold pointer-events-none"
+        style={{ y: blobTwoY } as any}
+      />
 
       {/* --------------------------------------------------------
           MAIN CONTENT
@@ -236,21 +309,40 @@ export default function Hero() {
                 */}
 
                 {/* Line 1 */}
-                <span className="block">I build things</span>
-                {/*
+                <span className="block">
+                  {/*
                   block → display: block forces this span onto its own line.
                   Without it, both spans would flow inline as one long line.
+                  font-mono → while scrambling, monospace font keeps
+                  character widths consistent so the line doesn't
+                  jitter horizontally as letters change.
+                  md:font-display → NOTE: this would switch fonts at the
+                  md breakpoint regardless of scramble state, which we
+                  don't want. We'll handle font consistency differently below.
                 */}
+                  {scrambledHeadline}
+                </span>
 
                 {/* Line 2 — gradient accent */}
-                <span className="block text-gradient">
+                <motion.span
+                  className="block text-gradient"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    delay: 1.8,
+                    // Wait until the scramble effect has mostly finished
+                    // 14 chars * 105ms = 1.5s) before fading this line in
+                    duration: 0.6,
+                    ease: "easeOut",
+                  }}
+                >
                   that work.
                   {/*
                     text-gradient → our custom class from index.css
                     The words "that work." render in our blue→amber gradient.
                     This draws the eye to the most important part of the headline.
                   */}
-                </span>
+                </motion.span>
               </h1>
 
               {/* Day 9: text scramble effect will wrap the h1 above */}
@@ -395,6 +487,19 @@ export default function Hero() {
               relative       → positioning context for floating elements inside
               hidden         → hidden on mobile (single column layout)
               lg:block       → visible on lg (1024px+) when two columns appear
+            */
+            style={{ y: cardY, opacity: cardOpacity } as any}
+            /*
+              y: cardY            → parallax vertical movement on scroll
+              opacity: cardOpacity → fades out as user scrolls past Hero
+
+              IMPORTANT: this motion.div already has variants (heroVariants.visual)
+              controlling its ENTRANCE animation (opacity, x, on mount).
+              The style prop's y/opacity here controls ONGOING scroll behavior,
+              layered on top of the entrance animation.
+              Framer Motion merges these correctly — variants control
+              discrete states (hidden/visible), while style with MotionValues
+              applies continuous, scroll-driven values independently.
             */
           >
             {/* Main card */}
