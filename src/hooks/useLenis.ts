@@ -9,7 +9,7 @@
 // synthetic scroll system. Without this, useScroll sees nothing.
 // ============================================================
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Lenis from "lenis";
 
 // We export the Lenis instance in a module-level ref so any component

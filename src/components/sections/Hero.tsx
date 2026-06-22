@@ -116,15 +116,12 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   // Reference to the <section> element - we'll scope scroll tracking to it.
 
-
   // Identical API — returns a MotionValue from 0 to 1.
   // All the useTransform calls below work exactly the same.
   // The only difference is this reads from Lenis instead of
   // native browser scroll, so it actually fires correctly.
 
- const scrollYProgress = useLenisScroll(sectionRef);
-
-
+  const scrollYProgress = useLenisScroll(sectionRef);
 
   // ==============================================
   // PARALLAX TRANSFORMS
@@ -170,11 +167,11 @@ export default function Hero() {
 
   return (
     <section
-    ref={sectionRef}
-    // Attach the ref here  - useScroll above reads from this element
-    id="home"
-    className="relative min-h-screen flex items-center pt-16 md:pt-20"
-    /*
+      ref={sectionRef}
+      // Attach the ref here  - useScroll above reads from this element
+      id="home"
+      className="relative min-h-screen flex items-center pt-16 md:pt-20"
+      /*
         relative        → positioning context for decorative absolute elements
         min-h-screen    → at least 100vh tall — fills the viewport
         flex items-center → vertically center the content grid
@@ -182,7 +179,6 @@ export default function Hero() {
         pt-16 md:pt-20  → top padding to clear the fixed navbar
       */
     >
-
       {/* --------------------------------------------------------
           DECORATIVE BACKGROUND ELEMENTS
           These are purely visual — blurred color blobs that add
