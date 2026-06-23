@@ -7,6 +7,8 @@ import Preloader from "@/components/shared/Preloader";
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
+import TechStack from "@/components/sections/TechStack";
+
 // Import the Hero section
 
 //import { personalInfo } from "@/data";
@@ -34,35 +36,29 @@ function App() {
             <main className="bg-bg-base">
               <Hero />
               <About />
-              {/* About section — replaces the "About" placeholder */}
+              <TechStack />
+              {/* TechStack replaces the "Stack" placeholder */}
 
-              {/* Remaining placeholders — replaced on their respective days */}
-              {["Stack", "Projects", "Services", "Process", "Contact"].map(
-                (section) => (
-                  <section
-                    key={section}
-                    id={section.toLowerCase()}
-                    className="section-padding border-t border-bg-border container-custom"
-                  >
-                    <h2 className="text-4xl font-bold text-text-primary mb-4">
-                      {section}
-                    </h2>
-                    <p className="text-text-secondary">
-                      Coming on Day{" "}
-                      {
-                        {
-                          Stack: 11,
-                          Projects: 13,
-                          Services: 14,
-                          Process: 14,
-                          Contact: 15,
-                        }[section]
-                      }
-                      .
-                    </p>
-                  </section>
-                ),
-              )}
+              {["Projects", "Services", "Process", "Contact"].map((section) => (
+                <section
+                  key={section}
+                  id={section.toLowerCase()}
+                  className="section-padding border-t border-bg-border container-custom"
+                >
+                  <h2 className="text-4xl font-bold text-text-primary mb-4">
+                    {section}
+                  </h2>
+                  <p className="text-text-secondary">
+                    Coming on Day{" "}
+                    {
+                      { Projects: 13, Services: 14, Process: 14, Contact: 15 }[
+                        section
+                      ]
+                    }
+                    .
+                  </p>
+                </section>
+              ))}
             </main>
           </motion.div>
         )}
