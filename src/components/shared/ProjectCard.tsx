@@ -12,48 +12,42 @@
 
 import { motion } from "framer-motion";
 import { ExternalLink, ArrowUpRight, Clock, CheckCircle } from "lucide-react";
-// ExternalLink → live site link icon
-// Github       → wait — Lucide removed this. We use SiGithub below.
-// ArrowUpRight → featured card CTA icon
-// Clock        → "in-progress" status badge icon
-// CheckCircle  → "live" status badge icon
 
 import { SiGithub } from "react-icons/si";
-// SiGithub → brand-accurate GitHub icon (Lucide dropped brand icons)
 
 import { Project } from "@/types";
-// Import the Project interface we defined on Day 3.
-// This ensures the card always receives a correctly shaped project object.
+// Import the Project interface defined
+// This ensures the card always receives a correctly shaped project object
 
 import { cn } from "@/lib/utils";
 
-// ============================================================
+// =======================================
 // COMPONENT PROPS
-// ============================================================
+// =======================================
 
 interface ProjectCardProps {
   project: Project;
-  // The full project object — typed with our Project interface.
+  // The full project object - typed with our Project interface.
   // Every property (title, tagline, tags, live, etc.) is available.
 
   variant?: "featured" | "grid";
   // Controls the card's visual size and layout.
-  // "featured" → larger card shown at the top of Projects section
-  // "grid"     → standard card in the project grid below
-  // ? → optional, defaults to "grid" if not provided
+  // "featured" => larger card shown at the top of projects section
+  // "grid" => standard card in the project grid below
+  // ? => Optional, defaults to "grid" if not provided.
 
   index?: number;
-  // Position in the list — used to calculate animation stagger delay.
-  // Optional — defaults to 0 if not provided.
+  // Position in the list = used to calculate animation stagger delay.
+  // Optional - defaults to 0 if not provided.
 }
 
-// ============================================================
+// ==================================
 // STATUS BADGE SUB-COMPONENT
-// ============================================================
+// ==================================
 
 function StatusBadge({ status }: { status: Project["status"] }) {
-  // Project["status"] → TypeScript "indexed access type".
-  // Reads the type of the "status" property directly from the Project interface.
+  // Project["status"] => TS "indexed access type".
+  // Reads the type of the 'status" property directly from the project interface.
   // Equivalent to: "live" | "in-progress" | "planned"
   // If we ever update Project["status"] in types/index.ts, this updates too.
 
@@ -62,38 +56,35 @@ function StatusBadge({ status }: { status: Project["status"] }) {
       label: "Live",
       icon: CheckCircle,
       className: "bg-success/10 text-success border-success/20",
-      // success/10 → green at 10% opacity background
-      // text-success → green text
-      // border-success/20 → green border at 20% opacity
     },
     "in-progress": {
       label: "In Progress",
       icon: Clock,
-      className: "bg-gold/10 text-gold border-gold/20",
+      className: "bg-bold/10 text-gold border-gold/20",
       // gold tones for in-progress
     },
     planned: {
       label: "Planned",
       icon: Clock,
       className: "bg-text-muted/10 text-text-muted border-text-muted/20",
-      // muted tones for planned — lowest visual priority
+      // muted tones for planned - lowest visual priority.
     },
   };
-  // config is a lookup object — index by status to get the right config.
+  // Config is a lookup object - index by status to get the right config.
   // This is cleaner than a chain of if/else or a switch statement.
 
   const { label, icon: Icon, className } = config[status];
   // Destructure the config for this status.
-  // icon: Icon → rename the "icon" property to "Icon" during destructuring.
-  // We MUST rename to uppercase to render it as a React component.
-  // { icon: Icon } means: "take the 'icon' property and call it 'Icon' here"
+  // icon: Icon => rename the "icon" property to "Icon" during destructuring.
+  // We Must rename to uppercase to render it as a React component.
+  // {icon:Icon} means: "take the 'icon' property and call it "Icon" here".
 
   return (
     <span
       className={cn(
         "inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border",
         className,
-        // cn() merges the base classes with the status-specific classes.
+        // cn() merges the base classes witht the status-specific classes.
       )}
     >
       <Icon size={10} />
@@ -102,18 +93,17 @@ function StatusBadge({ status }: { status: Project["status"] }) {
   );
 }
 
-// ============================================================
+// =================================
 // MAIN COMPONENT
-// ============================================================
+// =================================
 
 export default function ProjectCard({
   project,
   variant = "grid",
   index = 0,
 }: ProjectCardProps) {
-
   const isFeatured = variant === "featured";
-  // Boolean flag — cleaner to read than checking variant === "featured" repeatedly.
+  // Boolean flag - cleaner to read than checking variant === "featured" repeatedly.
 
   const isLive = project.status === "live";
   // true if the project is deployed and accessible.
@@ -121,64 +111,58 @@ export default function ProjectCard({
 
   return (
     <motion.article
-      // <article> is the correct semantic HTML element for a self-contained
-      // piece of content — a project card qualifies.
-      // motion.article → Framer Motion wraps it for entrance animation.
+      // <article> is the correct semantic HTML element for a self-contained piece of content - a project card qualifies.
+      // motion.article => Framer Motion wraps if for entrance animation.
 
       className={cn(
-        // Base classes — applied to ALL cards regardless of variant
+        // Base classes - applied to ALL cards regardless of variant
         "group relative flex flex-col rounded-2xl border border-bg-border bg-bg-surface overflow-hidden transition-all duration-300",
-        /*
-          group      → enables group-hover: on all children
-          relative   → positioning context for absolute overlay elements
-          flex flex-col → stack children vertically
-          rounded-2xl → 24px border radius
-          border border-bg-border → subtle border
-          bg-bg-surface → #111722 card background
-          overflow-hidden → clips the hover overlay and internal decorations
-          transition-all duration-300 → animate ALL CSS properties over 300ms
-                                        when state changes (hover, focus)
-        */
+        /**
+         * group => enables group-hover: on all children
+         * relative => positioning context for absolute overlay elements
+         * flex flex-col => stack children vertically
+         * rounded-2xl => 24px border radius
+         * border border-bg-border => subtle border
+         * bg-bg-surface => #111722 card bg
+         * overflow-hidden => clips the hover overlay and internal
+         * decorations.
+         * transition-all duration-300 => animate ALL CSS properties over 300ms when state changes (hover, focus)
+         */
         "hover:border-brand/40 hover:shadow-2xl hover:shadow-brand/5",
-        /*
-          hover:border-brand/40 → border turns brand blue (40% opacity) on hover
-          hover:shadow-2xl      → large box shadow appears on hover
-          hover:shadow-brand/5  → shadow tinted with brand blue at 5% opacity
-                                  Creates a subtle blue glow beneath the card.
-        */
+        /**
+         * hover:border-brand/40 => border turns brand blue (40% capacity) on hover
+         * hover:shadow-2xl => large box shadow appears on hover
+         * hover:shadow-brand/5 => shadow tinted with brand blue at 5% opacity - creates a subtle blue glow beneath the card.
+         */
         isFeatured && "lg:flex-row lg:min-h-[280px]",
-        /*
-          isFeatured → cn() conditionally applies these classes only for featured cards.
-          lg:flex-row → on desktop, featured card lays out horizontally
-                        (content left, visual right) instead of stacked vertically.
-          lg:min-h-[280px] → minimum height for the featured card on desktop.
-        */
+        /**
+         * isFeatured => cn() conditionally applies these classes only for featured cards.
+         * lg:flex-row => on desktop, featured card lays out horizontally (content left, visual right) instead of stacked vertically.
+         * lg:min-h-[280px] => minimum height for the featured card on desktop.
+         */
       )}
-
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      // whileInView → animate in when card scrolls into view.
-      // Each card animates independently as you scroll down.
+      // whileInView => animate in when card scrolls into view.
+      // EAch card animates independently as you scroll down.
       viewport={{ once: true, margin: "-60px" }}
       transition={{
         delay: index * 0.08,
         // Stagger: card 0 at 0ms, card 1 at 80ms, card 2 at 160ms, etc.
-        // 0.08s per card — fast enough to feel snappy, visible enough to notice.
+        // 0.08s per card - fast enough to feel snappy, visible enough to notice.
         duration: 0.5,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{ y: -6 }}
-      // On hover: lift the card 6px upward.
+      // on hover: lift the card 6px upward.
       // Combined with the shadow, creates a "floating" effect.
       // CSS transition handles color/shadow, Framer Motion handles the lift.
     >
-
-      {/* ====================================================
-          DECORATIVE TOP GRADIENT LINE
-          A thin colored line at the very top of the card —
-          only visible on hover, slides in from left.
-      ==================================================== */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-brand to-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+      {/* ===============================================
+                 DECORATIVE TOP GRADIENT LINE
+                 A thin colored line at the very top of the card - only visible on hover, slides in from left.
+                 ==============================================       */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-brand to-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
       {/*
         absolute top-0 left-0 right-0 → pinned to top edge, full width
         h-[2px]          → 2px tall line
@@ -189,20 +173,12 @@ export default function ProjectCard({
         origin-left      → grow from left to right
       */}
 
-      {/* ====================================================
-          CARD CONTENT WRAPPER
-          Handles the layout difference between featured and grid.
-      ==================================================== */}
-      <div className={cn(
-        "flex flex-col flex-1 p-6",
-        // flex flex-col → stack content vertically
-        // flex-1 → take all available space (important for equal-height cards in a grid)
-        // p-6    → 24px padding inside the card
-        isFeatured && "lg:p-8",
-        // Featured cards get more padding on desktop
-      )}>
-
-        {/* --- Header row: status badge + categories --- */}
+      {/* ====================================
+                CARD CONTENT WRAPPER
+                Handles the layout difference between featured and grid.
+                ================================ */}
+      <div className={cn("flex flex-col flex-1 p-6", isFeatured && "lg:p-8")}>
+        {/* Header row: status badge + categories */}
         <div className="flex items-start justify-between gap-3 mb-4">
           {/*
             items-start    → align badge and tags to their top edges
@@ -211,12 +187,11 @@ export default function ProjectCard({
             gap-3          → 12px between them
             mb-4           → 16px below the header row
           */}
-
           <StatusBadge status={project.status} />
           {/* Renders the colored status pill */}
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-1 justify-end">
+          <div className="flex flex-wrap gap-2 justify-end">
             {/*
               flex-wrap    → tags wrap to next line if needed
               justify-end  → align tags to the right
@@ -228,6 +203,7 @@ export default function ProjectCard({
               <span
                 key={tag}
                 className="text-xs px-2 py-0.5 rounded-full bg-bg-border text-text-muted"
+
                 /*
                   text-xs  → 12px
                   px-2 py-0.5 → 8px horizontal, 2px vertical padding
@@ -242,11 +218,10 @@ export default function ProjectCard({
           </div>
         </div>
 
-        {/* --- Project title --- */}
+        {/* ==== Project Title ==== */}
         <h3
           className={cn(
             "font-bold text-text-primary font-display mb-2 group-hover:text-brand transition-colors duration-300",
-            isFeatured ? "text-2xl lg:text-3xl" : "text-xl",
             /*
               isFeatured → featured cards get larger title text
               group-hover:text-brand → title turns brand blue when card is hovered
@@ -257,7 +232,7 @@ export default function ProjectCard({
           {project.title}
         </h3>
 
-        {/* --- Tagline --- */}
+        {/* Tagline.... */}
         <p className="text-text-secondary text-sm leading-relaxed mb-auto">
           {project.tagline}
           {/*
@@ -269,12 +244,14 @@ export default function ProjectCard({
           */}
         </p>
 
-        {/* --- Action Buttons --- */}
+        {/* Action Buttons */}
         <div
           className={cn(
             "flex items-center gap-3 mt-5",
             // mt-5 → 20px top margin, separating buttons from tagline
-            !isFeatured && "translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300",
+
+            !isFeatured &&
+              "translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300",
             /*
               For GRID cards only (not featured):
               translate-y-2 → start 8px below final position
@@ -290,22 +267,22 @@ export default function ProjectCard({
         >
           {/* Live site link */}
           {isLive && (
-            // Only render the live link if the project is actually live.
-            // Planned/in-progress projects have href="#" — no point linking.
-
-             <a href={project.live}
+            // ONly render the live link if the project is actually live.
+            // Planned/in-progress projects have href="#" - no point linking
+            <a
+              href={project.live}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
                 "flex items-center gap-1.5 text-sm font-medium transition-colors duration-200",
                 isFeatured
                   ? "btn-primary text-sm px-4 py-2"
-                  // Featured: full button style
-                  : "text-text-secondary hover:text-brand",
-                  // Grid: text link style (buttons appear on hover)
+                  : // Featured: full button style
+                    "text-text-secondary hover:text-brand",
+                // Grid: text link style (buttons appear on hover)
               )}
               onClick={(e) => e.stopPropagation()}
-              // e.stopPropagation() → prevents the click from bubbling up
+              // e.stopPropagation() => prevents the click from bubbling up
               // to any parent click handlers. Important if we wrap cards
               // in a clickable container later.
             >
@@ -323,12 +300,12 @@ export default function ProjectCard({
             </a>
           )}
 
-          {/* GitHub link */}
+          {/* Github link */}
           {project.github && (
-            // project.github is optional (?) — only render if it exists.
-            // Planned projects don't have a repo yet.
-
-             <a href={project.github}
+            // project.github is optional (?) - only render if it exists.
+            // planned projects don't have a repo yet
+            <a
+              href={project.github}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
@@ -350,22 +327,21 @@ export default function ProjectCard({
             </a>
           )}
 
-          {/* Planned badge — shown when project has no live link yet */}
+          {/* Planned badge - shown when project has no live link yet */}
           {!isLive && !project.github && (
-            <span className="text-xs text-text-muted italic">
-              Coming soon
-            </span>
+            <span className="text-xs text-text-muted italic">Coming Soon</span>
           )}
         </div>
-
       </div>
       {/* END CONTENT WRAPPER */}
 
-      {/* ====================================================
-          FEATURED CARD VISUAL PANEL
-          Right side panel on featured cards (desktop only).
-          Shows a decorative visual area.
-      ==================================================== */}
+      {/* ========================================
+        FEATURED CARD VISUAL PANEL
+        Right side panel on featured cards (desktop only).
+        Shows a decorative visual area.
+        =======================================
+*/}
+
       {isFeatured && (
         <div className="hidden lg:flex lg:w-[280px] flex-shrink-0 items-center justify-center bg-bg-border/50 relative overflow-hidden">
           {/*
@@ -377,7 +353,7 @@ export default function ProjectCard({
             relative overflow-hidden → for decorative elements inside
           */}
 
-          {/* Decorative background glow */}
+          {/* Decorative Bg glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-brand/10 to-gold/5" />
           {/*
             bg-gradient-to-br → gradient going to bottom-right
@@ -385,7 +361,7 @@ export default function ProjectCard({
             to-gold/5         → ends with gold at 5% opacity
           */}
 
-          {/* Project initials as large display text */}
+          {/* project initials as large display text */}
           <span className="relative text-[80px] font-bold font-display text-text-primary/5 select-none">
             {/*
               text-[80px]       → very large display text
@@ -407,7 +383,6 @@ export default function ProjectCard({
           </span>
         </div>
       )}
-
     </motion.article>
   );
 }
