@@ -12,67 +12,66 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layers, ExternalLink } from "lucide-react";
-// Layers      → section icon in the header
-// ExternalLink → "view all" link icon
 
 import { projects } from "@/data";
 import { ProjectCategory } from "@/types";
-// ProjectCategory → "all" | "frontend" | "fullstack" | "backend"
-
 import ProjectCard from "@/components/shared/ProjectCard";
 
-// ============================================================
+// ======================================
 // FILTER CONFIG
-// ============================================================
+// ======================================
 
-const filters: { label: string; value: ProjectCategory; count?: number }[] = [
+const filters: {
+  label: string;
+  value: ProjectCategory;
+  count?: number;
+}[] = [
   { label: "All Projects", value: "all" },
-  { label: "Frontend",     value: "frontend" },
-  { label: "Full-Stack",   value: "fullstack" },
-  { label: "Backend",      value: "backend"   },
+  { label: "Frontend", value: "frontend" },
+  { label: "Full-Stack", value: "fullstack" },
+  { label: "Backend", value: "backend" },
 ];
-// count is optional — we calculate it dynamically below.
+// count is optional - we calculate it dynamically below.
 // We don't hardcode counts here because they'd go stale if projects change.
 
-// ============================================================
+// =====================================
 // COMPONENT
-// ============================================================
+// =====================================
 
 export default function Projects() {
-
   const [activeFilter, setActiveFilter] = useState<ProjectCategory>("all");
   // Tracks which filter pill is active. Starts with "all".
 
-  // --------------------------------------------------------
-  // Derived data — calculated from state + data
-  // --------------------------------------------------------
+  // ========================================
+  // Derived data - calculated from state + data
+  // ========================================
 
   const featuredProjects = projects.filter((p) => p.featured);
-  // Featured projects are always shown at the top — not affected by the filter.
+  // Featured projects are always shown at the top - not affected by the filter.
   // .filter() keeps only projects where featured === true.
   // Result: [Nexus Pay, LagoNest]
 
   const nonFeaturedProjects = projects.filter((p) => !p.featured);
   // All non-featured projects go into the filterable grid below.
-  // !p.featured → keep projects where featured is FALSE.
+  // !p.featured => keep projects where featured is FALSe.
   // Result: [Ekklesia, Prestige, Artisano, PulseBoard]
 
   const filteredProjects = nonFeaturedProjects.filter((p) => {
     // Apply the active category filter to the non-featured projects.
     if (activeFilter === "all") return true;
-    // "all" → keep everything → return true for every project
+    // "all" => keep everything => return true for every project.
     return p.category === activeFilter;
-    // Specific filter → keep only projects matching the category
+    // Specific filter => keep only projects matching the category
   });
 
-  // Calculate count per category for filter pills
+  // Calculate count per category for filter pills.
   const getCount = (category: ProjectCategory): number => {
     // A function that takes a category and returns how many projects match.
     if (category === "all") return nonFeaturedProjects.length;
-    // "all" → count of ALL non-featured projects
+    // "all" => count of ALL non-featured projects
     return nonFeaturedProjects.filter((p) => p.category === category).length;
-    // Specific category → count only matching projects
-    // .filter(...).length → filter to matching items, then count them
+    // Specific category => count only matching projects
+    // .filter(...).length => filter to matching items, then count them.
   };
 
   return (
@@ -81,20 +80,11 @@ export default function Projects() {
       className="section-padding border-t border-bg-border"
     >
       <div className="container-custom">
-
-        {/* -----------------------------------------------
-            SECTION HEADER
-        ----------------------------------------------- */}
+        {/* ==========================
+                SECTION HEADER
+                ============================ */}
         <motion.div
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16"
-          /*
-            flex-col              → stacked on mobile
-            md:flex-row           → side by side on desktop
-            md:items-end          → align title block and link to their bottoms
-                                    so the link sits on the same baseline as the title
-            justify-between       → push title left, link right
-            gap-6                 → 24px gap between them
-          */
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -110,13 +100,13 @@ export default function Projects() {
             </h2>
             <p className="text-text-secondary max-w-lg">
               A selection of projects ranging from client work to personal
-              builds — each one a different problem, the same standard of craft.
+              builds - each on a different problem, the same standard of craft
             </p>
           </div>
 
           {/* Right: GitHub profile link */}
-
-            <a href="https://github.com/temitope-israel"
+          <a
+            href="https://github.com/temitope-israel"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-brand transition-colors duration-200 flex-shrink-0 group/link"
@@ -125,10 +115,11 @@ export default function Projects() {
               group/link    → named group for the underline animation
             */
           >
-            View GitHub profile
+            View GitHub Profile
             <ExternalLink
               size={14}
               className="transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+
               /*
                 On hover: icon moves slightly right AND up —
                 mimics the diagonal direction of the ExternalLink arrow.
@@ -139,9 +130,7 @@ export default function Projects() {
           </a>
         </motion.div>
 
-        {/* -----------------------------------------------
-            FEATURED PROJECTS
-        ----------------------------------------------- */}
+        {/* FEATURED PROJECTS */}
         <motion.div
           className="mb-16"
           initial={{ opacity: 0 }}
@@ -173,9 +162,7 @@ export default function Projects() {
           </div>
         </motion.div>
 
-        {/* -----------------------------------------------
-            FILTER PILLS
-        ----------------------------------------------- */}
+        {/* FILTER PILLS */}
         <motion.div
           className="flex flex-wrap gap-2 mb-10"
           initial={{ opacity: 0, y: 15 }}
@@ -185,8 +172,8 @@ export default function Projects() {
         >
           {filters.map((filter) => {
             const count = getCount(filter.value);
-            // Calculate count for this filter category.
-            // Runs for every filter on every render — but it's cheap (small array).
+            // calculate count for this filter category.
+            // Runs for every filter on every render - but it's cheap (small array).
 
             const isActive = activeFilter === filter.value;
             // Boolean: is this pill the currently selected one?
@@ -195,33 +182,31 @@ export default function Projects() {
               <motion.button
                 key={filter.value}
                 onClick={() => setActiveFilter(filter.value)}
-                className={`
-                  flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
-                  border transition-all duration-200
-                  ${isActive
-                    ? "bg-brand text-white border-brand shadow-lg shadow-brand/20"
-                    // Active: filled blue, white text, blue glow shadow
-                    : "bg-bg-surface text-text-secondary border-bg-border hover:border-brand/50 hover:text-text-primary"
-                    // Inactive: card background, hover effects
-                  }
-                `}
-                whileHover={{ scale: 1.03 }}
+                className={`flex item-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200
+                        ${
+                          isActive
+                            ? "bg-brand text-white border-brand shadow-lg shadow-brand/20"
+                            : // Active: filled blue, white text, blue glow shadow
+                              "bg-bg-surface text-text-secondary border-bg-border hover:border-b hover:text-text-primary"
+                          // Inactive: card background, hover effects
+                        }`}
+                whileInView={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                // Subtle scale on hover/tap — physical feedback
+                // Subtle scale on hover/top - physical feedback
               >
                 {filter.label}
 
                 {/* Count badge */}
                 <span
                   className={`
-                    text-xs px-1.5 py-0.5 rounded-full font-semibold
-                    ${isActive
-                      ? "bg-white/20 text-white"
-                      // Active: white at 20% opacity on the blue background
-                      : "bg-bg-border text-text-muted"
-                      // Inactive: dark background, muted text
-                    }
-                  `}
+                                text-xs px-1.5 py-0.5 rounded-full font-semibold
+                                ${
+                                  isActive
+                                    ? "bg-white/20 text-white"
+                                    : // Active: white at 20% opacity on the blue bg
+                                      "bg-bg-border text-text-muted"
+                                  // Inactive: dark bg, muted text
+                                }`}
                 >
                   {count}
                   {/* Shows how many projects are in this category */}
@@ -231,17 +216,12 @@ export default function Projects() {
           })}
         </motion.div>
 
-        {/* -----------------------------------------------
-            PROJECT GRID
-        ----------------------------------------------- */}
+        {/* PROJECT GRID */}
 
         {/* Results count */}
         <motion.p
           className="text-text-muted text-sm mb-6"
           key={activeFilter}
-          // key={activeFilter} → when activeFilter changes, React creates
-          // a NEW instance of this element — triggering the entrance animation
-          // again. Without this, the text would just update without animating.
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -252,10 +232,10 @@ export default function Projects() {
           </span>{" "}
           {filteredProjects.length === 1 ? "project" : "projects"}
           {activeFilter !== "all" && (
-            // Only show "in Frontend" etc. when a specific filter is active
+            // Only show "in frontend" etc. when a specific filter is active
             <span>
-              {" "}in{" "}
-              <span className="text-brand capitalize">{activeFilter}</span>
+              {" "}
+              in <span className="text-brand capitalize">{activeFilter}</span>
             </span>
           )}
         </motion.p>
@@ -263,8 +243,8 @@ export default function Projects() {
         {/* Animated grid */}
         <motion.div
           layout
-          // layout on the container → when the grid changes size
-          // (fewer/more items), the container smoothly resizes.
+          // layout on the container => when the grid changes size
+          // (fewwer/more items), the container smoothly resizes.
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <AnimatePresence mode="popLayout">
@@ -272,40 +252,35 @@ export default function Projects() {
               filteredProjects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
-                  // Stable key — project.id never changes.
-                  // AnimatePresence tracks entries/exits by this key.
                   project={project}
                   variant="grid"
                   index={index}
-                  // index within filteredProjects — used for stagger delay.
-                  // When filter changes, indices reset: 0, 1, 2, ...
-                  // So every newly visible card staggers from the start.
                 />
               ))
             ) : (
-              // Empty state — shown when no projects match the filter
               <motion.div
                 key="empty"
-                // Unique key so AnimatePresence tracks this as a distinct element
+                // Unique key so AnimatePresence tracks thi as a distinct element
                 className="col-span-full flex flex-col items-center justify-center py-20 text-center"
                 /*
                   col-span-full → span all 3 grid columns.
                                   The empty state should be centered across
                                   the full width of the grid, not just one cell.
                 */
+
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.4 }}
               >
-                <div className="w-16 h-16 rounded-2xl bg-bg-surface border border-bg-border flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-bg-surface border-bg-border flex items-center justify-center mb-4">
                   <Layers size={24} className="text-text-muted" />
                 </div>
                 <p className="text-text-secondary font-medium mb-1">
                   No projects in this category yet
                 </p>
                 <p className="text-text-muted text-sm">
-                  Check back soon — more projects are in progress.
+                  Check back soon - more projects are in progress.
                 </p>
                 <button
                   onClick={() => setActiveFilter("all")}
@@ -317,7 +292,6 @@ export default function Projects() {
             )}
           </AnimatePresence>
         </motion.div>
-
       </div>
     </section>
   );

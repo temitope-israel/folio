@@ -8,8 +8,9 @@ import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import TechStack from "@/components/sections/TechStack";
-import ProjectCard from "@/components/shared/ProjectCard";
-import { projects } from "@/data";
+import Projects from "@/components/sections/Projects";
+// import ProjectCard from "@/components/shared/ProjectCard";
+// import { projects } from "@/data";
 // Temporary imports for the preview — both will stay when Projects section is built
 
 // Import the Hero section
@@ -40,47 +41,10 @@ function App() {
               <Hero />
               <About />
               <TechStack />
-              {/* TechStack replaces the "Stack" placeholder */}
+              <Projects />
+              {/* Projects section — replaces the Day 12 preview */}
 
-              {/* Temporary Projects preview — replaced with full Projects section on Day 13 */}
-              <section
-                id="projects"
-                className="section-padding border-t border-bg-border"
-              >
-                <div className="container-custom">
-                  <h2 className="text-4xl font-bold text-text-primary mb-4">
-                    Projects
-                  </h2>
-                  <p className="text-text-secondary mb-12">
-                    Full Projects section coming Day 13. Previewing cards below.
-                  </p>
-
-                  {/* Featured card preview */}
-                  <div className="mb-8">
-                    <ProjectCard
-                      project={projects[0]}
-                      variant="featured"
-                      index={0}
-                    />
-                  </div>
-
-                  {/* Grid card previews */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {projects.slice(1, 4).map((project, index) => (
-                      // .slice(1, 4) → projects at index 1, 2, 3
-                      // Skips index 0 (already shown as featured above)
-                      <ProjectCard
-                        key={project.id}
-                        project={project}
-                        variant="grid"
-                        index={index}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </section>
-
-              {["Projects", "Services", "Process", "Contact"].map((section) => (
+              {["Services", "Process", "Contact"].map((section) => (
                 <section
                   key={section}
                   id={section.toLowerCase()}
@@ -91,12 +55,7 @@ function App() {
                   </h2>
                   <p className="text-text-secondary">
                     Coming on Day{" "}
-                    {
-                      { Projects: 13, Services: 14, Process: 14, Contact: 15 }[
-                        section
-                      ]
-                    }
-                    .
+                    {{ Services: 14, Process: 14, Contact: 15 }[section]}.
                   </p>
                 </section>
               ))}
