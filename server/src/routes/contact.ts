@@ -12,23 +12,21 @@ import { Router } from "express";
 // Router and mount it at a prefix in index.ts.
 
 import { contactLimiter } from "../middleware/rateLimiter";
-import { handleContact } from "../controllers/contactController";
+import { submitContact } from "../controllers/contactController";
 
 const router = Router();
 // Create a new Router instance.
 
 router.post(
   "/",
-  // Path "/" → relative to where this router is mounted.
-  // Mounted at "/api/contact" in index.ts → full path is POST /api/contact
-
+  
   contactLimiter,
   // Middleware runs BEFORE the controller.
   // contactLimiter checks the rate limit.
   // If exceeded → sends 429, never reaches handleContact.
   // If within limit → calls next() → handleContact runs.
 
-  handleContact,
+  submitContact,
   // The controller function — handles the actual request.
 );
 
