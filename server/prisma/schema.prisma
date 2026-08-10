@@ -1,0 +1,89 @@
+// schema.prisma
+// This file is the single source of truth for my db structure.
+// Prisma reads this and generates: the db tables + the TS client.
+
+// ==== Generator ====
+// Tells Prisma what to generate when you run "prisma generate".
+// "prisma-client-js" = the TS/JS client that'll be imported into the code.
+
+generator client {
+    provider = "prisma-client"
+    output = "../src/generated/prisma"
+}
+
+datasource db {
+    provider  = "postgresql"
+}
+
+// Datasource =====
+// Tells Prisma which db to connect to and where.
+// "env"("DATABASE_URL")" reads the value from your .env file -
+// same dotenv pattern as everything else.
+
+
+
+// ===== Model: Message ====
+// A "model" in Prisma = a table in PostgreSQL.
+// Each field = a column.
+// The name "Message" becomes the table name "Message" in the db.
+
+model Message {
+    // @id marks this as the primary key (unique, required)
+    // @default(autoincrement()) = PostgreSQL automatically assigns 1, 2, 3....
+    id Int @id @default(autoincrement())
+
+    // String fields map to PostgreSQL's VARCHAR type.
+    // All are required (no "?" after the type) - matching our zod validation
+    name    String
+    email   String
+    subject String
+
+    // @db.Text stores a PostgreSQL TEXT type instead of VARCHAR.
+    // TEXT has no length limit - better for long messages.
+    // Without @db.Text, Prisma uses VARCHAR(191) by default.
+    message String @db.Text
+
+    // Boolean field - did we successfully send the email?
+    // @default(false) = starts as false, we update it to true after email sends
+    emailSent Boolean @default(false)
+
+    // DateTime fields for record keeping.
+    // @default(now()) = PostgreSQL automatically sets this to the current timestamp when the row is created - it's never set manually.
+    // updatedAt with @updatedAt - Prisma automatically updates this
+    // whenever the row is chnages - alos never set manually
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+
+
+
+// ==== Model: PageVisit =========
+// Tracks who visited my portfolio - needed for analytics dashboard
+// Store minimal data - no personal info, just aggregate visit patterns.
+
+
+model PageVisit {
+    id Int @id @default(autoincrement())
+
+    // Which page did they visit? e.g. "/", "/projects", "/contact"
+    // @default("/") => assume homepage if not specified
+
+    page String @default("/")
+
+    // Which country are they from?
+    // String? = the "?" makes this optional (nullable in PostgreSQL).
+    // We might not always know the country.
+    country String?
+
+
+    // Which device type? "mobile", "tablet", or "desktop"
+    // Also optional - user agent parsing can fail
+    device String?
+
+    // The visitor's IP address - for deduplication (avoid counting same
+    // person twice)
+    ipAddress String?
+
+    createdAt DateTime @default(now())
+}
