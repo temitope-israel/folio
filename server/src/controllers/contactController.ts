@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import { sendContactEmail } from "../services/emailService";
-// Import the function we just built — the controller delegates email work to the service
+import prisma from "../lib/prisma";
+// Import the Prisma singleton — one shared database connection
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
@@ -32,12 +33,40 @@ export const submitContact = async (
   const { name, email, subject, message }: ContactData = result.data;
 
   try {
-    // Replace the console.log placeholder with the real email call
-    await sendContactEmail({ name, email, subject, message });
-    // "await" pauses execution here until sendContactEmail finishes.
-    // If it throws (Gmail down, wrong password, etc.), the catch block handles it.
+    // ── Step 1: Save to database first ───────────────────────────────────
+    // We save BEFORE sending the email.
+    // Reason: if the email fails, we still have the message in the database
+    // and can retry sending later. If we saved after and the DB failed,
+    // the email would have gone out but we'd have no record of it.
 
-    console.log(`✅ Contact email sent — from ${name} <${email}>`);
+    const savedMessage = await prisma.message.create({
+      // "data" is the object of fields to insert
+      // These map directly to the columns in your Message table
+      data: {
+        name,
+        email,
+        subject,
+        message,
+        emailSent: false,
+        // Start as false — we'll update to true after email succeeds
+      },
+    });
+    // savedMessage now contains the full row including:
+    // savedMessage.id, savedMessage.createdAt, savedMessage.updatedAt
+
+    // ── Step 2: Send the email ────────────────────────────────────────────
+    await sendContactEmail({ name, email, subject, message });
+
+    // ── Step 3: Update emailSent to true ──────────────────────────────────
+    // Email sent successfully — update the record to reflect that
+    await prisma.message.update({
+      where: { id: savedMessage.id },
+      // "where" identifies WHICH row to update — by its unique id
+      data: { emailSent: true },
+      // "data" is what to change — only emailSent, nothing else
+    });
+
+    console.log(`✅ Message saved (id: ${savedMessage.id}) and email sent to ${email}`);
 
     res.status(201).json({
       success: true,
@@ -45,8 +74,6 @@ export const submitContact = async (
     });
 
   } catch (error) {
-    // Email failed — could be wrong credentials, Gmail outage, etc.
-    // We pass to the error handler which returns a 500 response
     next(error);
   }
 };
