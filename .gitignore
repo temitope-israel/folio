@@ -23,3 +23,5 @@ Thumbs.db
 # LOgs
 npm-debug.log*
 yarn-debug.log*
+
+src/generated/
