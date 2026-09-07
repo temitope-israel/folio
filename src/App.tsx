@@ -1,6 +1,6 @@
 // src/App.tsx
-import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 // import { useLenis } from "@/hooks/useLenis";
 // import CustomCursor from "@/components/shared/CustomCursor";
 // import Preloader from "@/components/shared/Preloader";
@@ -14,7 +14,7 @@ import Contact from "@/components/sections/Contact";
 import { recordPageVisit } from "@/lib/api";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   // useLenis();
 
   useEffect(() => {
