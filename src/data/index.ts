@@ -109,6 +109,32 @@ export const heroStats: Stat[] = [
 export const projects: Project[] = [
     // === REAL PROJECTS (Built and Deployed) ===
     {
+        id: "smooth-ride-motorcycles", // Kebab-case id - lowercase, words separated by hyphens.
+        // Used as React list key and for URL slugs.
+        title: "Smooth Ride Motorcycles",
+        tagline: "Customer Profiling Application",
+        description:       "A full-stack web application for registering and managing Smooth Ride Motorcycle customers with barcode scanning, admin roles, and analytics.",
+        tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Next.js MongoDB"],
+        category: "fullstack",
+        live: "https://smooth-ride-motorcycles.vercel.app/",
+        github: "https://github.com/temitope-israel/smooth-ride-motorcycles",
+        featured: true, // featured: true = appears in the featured row at the top of the Projects section.
+        status: "live",
+    },
+    {
+        id: "website-health-check", // Kebab-case id - lowercase, words separated by hyphens.
+        // Used as React list key and for URL slugs.
+        title: "Website Health Check",
+        tagline: "Comprehensive website performance monitoring",
+        description:       "A full-stack site auditing tool that scores any website and generates a downloadable, branded report.",
+        tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "PostgreSQL","Prisma", "Zod"],
+        category: "fullstack",
+        live: "https://webbsite-health-check.vercel.app/",
+        github: "https://github.com/temitope-israel/website-health-check",
+        featured: true, // featured: true = appears in the featured row at the top of the Projects section.
+        status: "live",
+    },
+    {
         id: "nexus-pay", // Kebab-case id - lowercase, words separated by hyphens.
         // Used as React list key and for URL slugs.
         title: "Nexus Pay",
@@ -118,7 +144,7 @@ export const projects: Project[] = [
         category: "frontend",
         live: "https://nexus-pay-eight.vercel.app/",
         github: "https://github.com/temitope-israel/nexus-pay",
-        featured: true, // featured: true = appears in the featured row at the top of the Projects section.
+        featured: false, // featured: true = appears in the featured row at the top of the Projects section.
         status: "live",
     },
 
@@ -132,7 +158,7 @@ export const projects: Project[] = [
     category: "frontend",
     live: "https://lagonest.vercel.app/",
     github: "https://github.com/temitope-israel/lagonest",
-    featured: true,
+    featured: false,
     status: "live",
   },
 
