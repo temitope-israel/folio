@@ -8,7 +8,11 @@
 // In development: reads from .env.local in your project root (src/)
 // In production: Vite replaces this at build time with the actual value
 // VITE_ prefix is required — Vite only exposes variables with this prefix to the browser
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
+// Replace this:
+// const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
+
+// With this:
+const BASE_URL = (import.meta as any).env?.VITE_API_URL || "http://localhost:4000/api";
 // Fallback to localhost:4000 if the env variable isn't set yet
 
 // ─── Types ────────────────────────────────────────────────────────────────────
