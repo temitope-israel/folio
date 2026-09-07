@@ -1,5 +1,5 @@
 // src/App.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 // import { useLenis } from "@/hooks/useLenis";
 // import CustomCursor from "@/components/shared/CustomCursor";
@@ -11,51 +11,44 @@ import TechStack from "@/components/sections/TechStack";
 import Projects from "@/components/sections/Projects";
 import Services from "@/components/sections/Services";
 import Contact from "@/components/sections/Contact";
-// import Process from "@/components/sections/Process";
-// Add with other section imports
-// import ProjectCard from "@/components/shared/ProjectCard";
-// import { projects } from "@/data";
-// Temporary imports for the preview — both will stay when Projects section is built
-
-// Import the Hero section
-
-//import { personalInfo } from "@/data";
+import { recordPageVisit } from "@/lib/api";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   // useLenis();
 
+  useEffect(() => {
+    recordPageVisit("/");
+  }, []);
+
   return (
     <>
-      {/* <CustomCursor />
+      {/* <CustomCursor /> */}
 
-      <AnimatePresence mode="wait">
+      {/* <AnimatePresence mode="wait">
         {isLoading ? (
           <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
-        ) : (
-        )}
+        ) : null}
       </AnimatePresence> */}
-          <motion.div
-            key="main"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <Navbar />
 
-            <main className="bg-bg-base">
-              <Hero />
-              <About />
-              <TechStack />
-              <Projects />
-              <Services />
-              {/* <Process /> */}
-              {/* Services and Process replace the last two placeholders */}
+      <motion.div
+        key="main"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <Navbar />
 
-              {/* Only Contact remains as a placeholder */}
-              <Contact />
-            </main>
-          </motion.div>
+        <main className="bg-bg-base">
+          <Hero />
+          <About />
+          <TechStack />
+          <Projects />
+          <Services />
+          {/* <Process /> */}
+          <Contact />
+        </main>
+      </motion.div>
     </>
   );
 }
