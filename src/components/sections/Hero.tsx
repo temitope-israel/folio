@@ -363,7 +363,7 @@ export default function Hero() {
               </span>
               . I craft fast, scalable web applications with{" "}
               <span className="text-text-primary font-medium">
-                React, Node.js, and PostgreSQL
+                React, TypeScript, Next.js, Node.js, MongoDB, and PostgreSQL
               </span>
               .
               {/*

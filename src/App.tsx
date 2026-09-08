@@ -1,10 +1,8 @@
-// src/App.tsx
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-// import { useLenis } from "@/hooks/useLenis";
-// import CustomCursor from "@/components/shared/CustomCursor";
-// import Preloader from "@/components/shared/Preloader";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import ScrollToTop from "@/components/shared/ScrollToTop";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import TechStack from "@/components/sections/TechStack";
@@ -14,23 +12,12 @@ import Contact from "@/components/sections/Contact";
 import { recordPageVisit } from "@/lib/api";
 
 function App() {
-  // const [isLoading, setIsLoading] = useState(true);
-  // useLenis();
-
   useEffect(() => {
     recordPageVisit("/");
   }, []);
 
   return (
     <>
-      {/* <CustomCursor /> */}
-
-      {/* <AnimatePresence mode="wait">
-        {isLoading ? (
-          <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
-        ) : null}
-      </AnimatePresence> */}
-
       <motion.div
         key="main"
         initial={{ opacity: 0 }}
@@ -38,17 +25,17 @@ function App() {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <Navbar />
-
         <main className="bg-bg-base">
           <Hero />
           <About />
           <TechStack />
           <Projects />
           <Services />
-          {/* <Process /> */}
           <Contact />
         </main>
+        <Footer />
       </motion.div>
+      <ScrollToTop />
     </>
   );
 }

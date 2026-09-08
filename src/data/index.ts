@@ -58,8 +58,8 @@ export const personalInfo = {
     // Bio is an array of strings — each string is one paragraph.
     // Using an array (instead of one long string) lets us render
     // each paragraph as a separate <p> tag in the About section.
-    "I'm a Full-Stack Developer based in Lagos, Nigeria, with 3 years of freelance experience building fast, scalable, and beautiful web applications.",
-    "My stack is React, Next.js, TypeScript, Node.js, and PostgreSQL — but what drives me isn't the tools, it's the craft. I care deeply about performance, clean architecture, and interfaces that feel effortless to use.",
+    "I am Temitope Omoniyi - a Full-Stack Developer based in Lagos, Nigeria, with 3 years of freelance experience building fast, scalable, and beautiful web applications.",
+    "My stack is React, TypeScript, Next.js, Node.js, MongoDB, and PostgreSQL — but what drives me isn't the tools, it's the craft. I care deeply about performance, clean architecture, and interfaces that feel effortless to use.",
     "When I'm not building, I'm reading — currently working through Myles Munroe. I believe the same principles of purpose and potential that apply to people apply to software.",
   ] as string[],
   resumeUrl: "/resume.pdf",
@@ -177,42 +177,42 @@ export const projects: Project[] = [
     featured: false,
     status: "planned",
   },
-  {
-    id: "prestige",
-    title: "Prestige",
-    tagline: "Luxury e-commerce storefront",
-    description:
-      "A premium e-commerce storefront for luxury goods, featuring product catalog, cart, checkout flow with Paystack integration, and order management.",
-    tags: ["Next.js", "TypeScript", "Paystack", "Prisma", "Tailwind CSS"],
-    category: "fullstack",
-    live: "#",
-    featured: false,
-    status: "planned",
-  },
-  {
-    id: "artisano",
-    title: "Artisano",
-    tagline: "Nigerian artisan marketplace",
-    description:
-      "A two-sided marketplace connecting Nigerian artisans with customers. Features vendor onboarding, product listings, messaging, and Flutterwave payment processing.",
-    tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Flutterwave"],
-    category: "fullstack",
-    live: "#",
-    featured: false,
-    status: "planned",
-  },
-  {
-    id: "pulse",
-    title: "PulseBoard",
-    tagline: "Real-time analytics dashboard",
-    description:
-      "A real-time analytics dashboard with live charts, KPI tracking, CSV export, and role-based access control. Built for business intelligence use cases.",
-    tags: ["React", "Node.js", "PostgreSQL", "WebSockets", "Recharts"],
-    category: "fullstack",
-    live: "#",
-    featured: false,
-    status: "planned",
-  },
+  // {
+  //   id: "prestige",
+  //   title: "Prestige",
+  //   tagline: "Luxury e-commerce storefront",
+  //   description:
+  //     "A premium e-commerce storefront for luxury goods, featuring product catalog, cart, checkout flow with Paystack integration, and order management.",
+  //   tags: ["Next.js", "TypeScript", "Paystack", "Prisma", "Tailwind CSS"],
+  //   category: "fullstack",
+  //   live: "#",
+  //   featured: false,
+  //   status: "planned",
+  // },
+  // {
+  //   id: "artisano",
+  //   title: "Artisano",
+  //   tagline: "Nigerian artisan marketplace",
+  //   description:
+  //     "A two-sided marketplace connecting Nigerian artisans with customers. Features vendor onboarding, product listings, messaging, and Flutterwave payment processing.",
+  //   tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Flutterwave"],
+  //   category: "fullstack",
+  //   live: "#",
+  //   featured: false,
+  //   status: "planned",
+  // },
+  // {
+  //   id: "pulse",
+  //   title: "PulseBoard",
+  //   tagline: "Real-time analytics dashboard",
+  //   description:
+  //     "A real-time analytics dashboard with live charts, KPI tracking, CSV export, and role-based access control. Built for business intelligence use cases.",
+  //   tags: ["React", "Node.js", "PostgreSQL", "WebSockets", "Recharts"],
+  //   category: "fullstack",
+  //   live: "#",
+  //   featured: false,
+  //   status: "planned",
+  // },
 ]
 
 

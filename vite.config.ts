@@ -35,7 +35,7 @@ export default defineConfig({
   },
 
   server: {
-    port: 3000,
+    port: 5173,
     // Run the dev server on port 3000 instead of Vite's default 5173.
     // So your local URL will be http://localhost:3000
   },
