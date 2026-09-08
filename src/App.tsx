@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLenis } from "@/hooks/useLenis"; // add back
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/shared/ScrollToTop";
@@ -12,6 +13,8 @@ import Contact from "@/components/sections/Contact";
 import { recordPageVisit } from "@/lib/api";
 
 function App() {
+  useLenis(); // add back — initializes Lenis so getLenis() works everywhere
+
   useEffect(() => {
     recordPageVisit("/");
   }, []);
