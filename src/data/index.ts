@@ -83,7 +83,7 @@ export const navLinks: NavLink[] = [
     {label: "Stack", href: "#stack"},
     {label: "Projects", href: "#projects"},
     {label: "Services", href: "#services"},
-    {label: "Process", href: "#process"},
+    // {label: "Process", href: "#process"},
     {label: "Contact", href: "#contact"},
 ];
 
@@ -371,11 +371,11 @@ export const socialLinks: SocialLink[] =[
     href: "https://linkedin.com/in/temitope-israel", // update with real URL
     icon: "Linkedin",
   },
-  {
-    label: "Twitter",
-    href: "https://twitter.com/temitope_dev", // update or remove
-    icon: "Twitter",
-  },
+  // {
+  //   label: "Twitter",
+  //   href: "https://twitter.com/temitope_dev", // update or remove
+  //   icon: "Twitter",
+  // },
   {
     label: "Email",
     href: `mailto:${personalInfo.email}`,
