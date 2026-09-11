@@ -177,6 +177,8 @@
        svh = "small viewport height" = excludes the browser chrome.
        This prevents the classic mobile viewport height bug. */
     min-height: 100svh;
+     -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   }
 
   /* Heading defaults — apply display font to all heading levels */
@@ -352,16 +354,21 @@
 @layer components {
 
   /* Container — centers content with max width and horizontal padding */
-  .container-custom {
+ .container-custom {
     width: 100%;
     max-width: var(--spacing-container);
-    /* Never wider than 1280px */
     margin-left: auto;
     margin-right: auto;
-    /* auto margins center the container horizontally */
-    padding-left: 24px;
-    padding-right: 24px;
-    /* 24px side padding on mobile */
+    padding-left: 16px;
+    padding-right: 16px;
+    overflow-x: hidden;
+  }
+
+   @media (min-width: 640px) {
+    .container-custom {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
   }
 
   @media (min-width: 768px) {
