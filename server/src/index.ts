@@ -24,6 +24,7 @@ import helmet from "helmet";
 import contactRoutes from "./routes/contact";
 import analyticsRoutes from "./routes/analytics";
 import { errorHandler } from "./middleware/errorHandler";
+import authRouter from "./routes/auth";
 
 // ============================================================
 // APP INITIALIZATION
@@ -49,7 +50,7 @@ app.use(helmet());
 // Registered FIRST so security headers are on every response.
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
   // origin → which frontend URLs are allowed to make requests.
   // In development: http://localhost:3000 (our Vite dev server).
   // In production: set FRONTEND_URL to your Vercel URL.
@@ -73,6 +74,9 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 // express.urlencoded() → parses URL-encoded form data.
 // extended: true → use the "qs" library for richer parsing (nested objects).
 // Most modern APIs send JSON, but this handles HTML form submissions too.
+
+
+app.use("/api/auth", authRouter);
 
 // ============================================================
 // ROUTES
