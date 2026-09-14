@@ -170,7 +170,7 @@
 
     /* Prevent horizontal scroll — important for mobile.
        overflow-x: hidden clips anything that overflows the viewport width. */
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 
     /* min-h-svh (small viewport height) instead of min-h-screen.
        On mobile browsers, 100vh includes the browser chrome (address bar).
@@ -580,6 +580,10 @@
          "things that"
          "work." */
   }
+
+  .animate-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
 
   /* Clip text — used for gradient text (pairs with .text-gradient) */
   .clip-text {

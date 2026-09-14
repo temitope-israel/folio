@@ -153,7 +153,11 @@ export default function ProjectCard({
         duration: 0.5,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
-      whileHover={{ y: -6 }}
+      whileHover={{
+        y: -6,
+        transition: { type: "spring", stiffness: 400, damping: 25 },
+      }}
+
       // on hover: lift the card 6px upward.
       // Combined with the shadow, creates a "floating" effect.
       // CSS transition handles color/shadow, Framer Motion handles the lift.

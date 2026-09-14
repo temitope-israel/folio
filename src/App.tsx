@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
-// Routes → container for all your route definitions
-// Route  → maps a URL path to a component
+import { AnimatePresence } from "framer-motion";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useLenis } from "@/hooks/useLenis";
 import Navbar from "@/components/layout/Navbar";
@@ -15,19 +14,20 @@ import Projects from "@/components/sections/Projects";
 import Services from "@/components/sections/Services";
 import Contact from "@/components/sections/Contact";
 import AdminLogin from "@/pages/admin/Login";
-import { recordPageVisit } from "@/lib/api";
 import AdminDashboard from "./pages/admin/Dashboard";
+import { recordPageVisit } from "@/lib/api";
 
-// Portfolio home page — all sections together
 function Portfolio() {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      exit={{ opacity: 0 }}
+      // exit → plays when navigating away from this route
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
       <Navbar />
-      <main className="bg-bg-base">
+      <main className="bg-bg-base overflow-x-hidden">
         <Hero />
         <About />
         <TechStack />
@@ -42,6 +42,10 @@ function Portfolio() {
 
 function App() {
   useLenis();
+  const location = useLocation();
+  // useLocation() → returns the current URL object
+  // location.pathname → e.g. "/", "/admin/login", "/admin/dashboard"
+  // We pass it as key to AnimatePresence so it detects route changes
 
   useEffect(() => {
     recordPageVisit("/");
@@ -49,23 +53,27 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Portfolio />} />
-        {/* "/" → the portfolio home page */}
-
-        <Route path="/admin/login" element={<AdminLogin />} />
-        {/* "/admin/login" → the login page — public, no protection needed */}
-
-        <Route
-          path="/admin/dashboard"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-        {/* "/admin/dashboard" → protected — only accessible with a valid token */}
-      </Routes>
+      <AnimatePresence mode="wait">
+        {/*
+          mode="wait" → waits for the exit animation to finish
+          before mounting the next route's enter animation.
+          key={location.pathname} → tells AnimatePresence that when
+          the URL changes, the old component should exit and the
+          new one should enter.
+        */}
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Portfolio />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </AnimatePresence>
 
       <ScrollToTop />
     </>

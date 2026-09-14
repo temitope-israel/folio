@@ -58,20 +58,27 @@ export default function ScrollToTop() {
       {isVisible && (
         <motion.button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 group"
+          className="fixed left-10 sm:bottom-8 sm:right-8 z-[9999] group relative"
+          // relative → needed for the absolute arrow div inside
           aria-label="Scroll to top"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.2 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
         >
+          {/* Background circle */}
+          <div className="absolute inset-0 rounded-full bg-bg-surface border border-bg-border" />
+          {/* Sits behind the SVG ring — gives the button a solid background */}
+
+          {/* SVG progress ring */}
           <svg
             width={SIZE}
             height={SIZE}
             viewBox={`0 0 ${SIZE} ${SIZE}`}
-            className="-rotate-90"
+            className="-rotate-90 relative z-10"
+            // relative z-10 → above the background circle
           >
             <circle
               cx={SIZE / 2}
@@ -96,7 +103,7 @@ export default function ScrollToTop() {
             />
           </svg>
 
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center z-10">
             <ArrowUp
               size={16}
               className="text-text-secondary group-hover:text-brand transition-colors duration-200"

@@ -211,7 +211,7 @@ export default function Footer() {
               </span>
               . All rights reserved.
             </p>
-            <p className="text-text-muted text-xs">
+            {/* <p className="text-text-muted text-xs">
               Designed & built by{" "}
               <a
                 href={personalInfo.github}
@@ -221,7 +221,7 @@ export default function Footer() {
               >
                 {personalInfo.shortName}
               </a>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
