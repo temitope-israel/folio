@@ -25,6 +25,7 @@ import contactRoutes from "./routes/contact";
 import analyticsRoutes from "./routes/analytics";
 import { errorHandler } from "./middleware/errorHandler";
 import authRouter from "./routes/auth";
+import messagesRouter from "./routes/messages";
 
 // ============================================================
 // APP INITIALIZATION
@@ -105,6 +106,9 @@ app.use("/api/analytics", analyticsRoutes);
 // Any request to /api/analytics/* is handled by analyticsRoutes.
 // router.post("/visit") → POST /api/analytics/visit
 // router.get("/") → GET /api/analytics
+
+
+app.use("/api/messages", messagesRouter)
 
 // 404 handler — for routes that don't exist
 app.use((req, res) => {

@@ -34,6 +34,74 @@ interface LoginResponse {
   message?: string;
 }
 
+
+// ─── Admin API ────────────────────────────────────────────────────────────────
+
+// Helper that adds the auth token to every admin request
+const authHeaders = () => ({
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${getToken()}`,
+  // Bearer token — server's authMiddleware reads this
+});
+
+
+export interface Message {
+  id: number;
+  name: string;
+  email:string;
+  subject:string;
+  message: string;
+  emailSent: boolean;
+  createdAt: string;
+}
+
+export interface AnalyticsData {
+  visits: {
+    total: number;
+    lastSevenDays: number;
+  };
+  messages: {
+    total: number;
+    recent: Omit<Message, "message">[];
+     // Omit<Message, "message"> → same as Message but without the message field
+    // The analytics endpoint returns a preview, not the full message text
+  }
+}
+
+
+export const fetchMessages = async (): Promise<Message[]> => {
+  const response = await fetch(`${BASE_URL}/messages`, {
+    headers: authHeaders(),
+    // Send the JWT token with this request
+  });
+
+  const data = await response.json();
+
+
+  if(!response.ok) {
+    throw new Error(data.message || "FAiled to fetch messages");
+  }
+
+
+  return data.data
+}
+
+
+export const fetchAnalytics = async (): Promise<AnalyticsData> => {
+  const response = await fetch (`${BASE_URL}/analytics`, {
+    headers: authHeaders(),
+  });
+
+
+  const data = await response.json();
+
+  if(!response.ok) {
+    throw new Error(data.message || "Failed to fetch analytics");
+  }
+
+  return data.data;
+}
+
 // ─── Contact API ──────────────────────────────────────────────────────────────
 
 export const submitContactForm = async (payload: ContactPayload): Promise<ApiResponse> => {

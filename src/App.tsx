@@ -16,6 +16,7 @@ import Services from "@/components/sections/Services";
 import Contact from "@/components/sections/Contact";
 import AdminLogin from "@/pages/admin/Login";
 import { recordPageVisit } from "@/lib/api";
+import AdminDashboard from "./pages/admin/Dashboard";
 
 // Portfolio home page — all sections together
 function Portfolio() {
@@ -59,18 +60,12 @@ function App() {
           path="/admin/dashboard"
           element={
             <ProtectedRoute>
-              <div className="min-h-screen bg-bg-base flex items-center justify-center">
-                <p className="text-text-primary text-xl">
-                  Dashboard — Day 24 builds this
-                </p>
-              </div>
+              <AdminDashboard />
             </ProtectedRoute>
           }
         />
         {/* "/admin/dashboard" → protected — only accessible with a valid token */}
       </Routes>
-
-
 
       <ScrollToTop />
     </>

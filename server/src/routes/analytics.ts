@@ -1,18 +1,14 @@
-// server/src/routes/analytics.ts
-// ============================================================
-// ANALYTICS ROUTES
-// ============================================================
-
 import { Router } from "express";
-import { generalLimiter } from "../middleware/rateLimiter";
 import { recordVisit, getAnalytics } from "../controllers/analyticsController";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 const router = Router();
 
-router.post("/visit",generalLimiter, recordVisit, recordVisit);
-// POST /api/analytics/visit → record a page visit
+router.post("/visit", recordVisit);
+// Public — anyone visiting the portfolio records a visit
 
-router.get("/", generalLimiter, getAnalytics);
-// GET /api/analytics → get analytics data (admin dashboard, Day 24)
+router.get("/", authMiddleware, getAnalytics);
+// Protected — only admins can fetch analytics data
+// authMiddleware runs first, then getAnalytics
 
 export default router;
