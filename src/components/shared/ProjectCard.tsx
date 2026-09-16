@@ -218,46 +218,52 @@ export default function ProjectCard({
       </div>
 
       {/* ── Featured card visual panel ────────────────────────────────── */}
+      {/* ── Featured card visual panel ────────────────────────────────── */}
       {isFeatured && (
-        <div className="hidden lg:flex lg:w-[320px] flex-shrink-0 relative overflow-hidden">
-          {project.image ? (
-            <>
-              {/* Project screenshot */}
+        <>
+          {/* Mobile image — shown on small screens, hidden on desktop */}
+          {project.image && (
+            <div className="lg:hidden relative h-48 overflow-hidden">
+              {/*
+          lg:hidden → only shows below 1024px
+          h-48 → 192px tall on mobile
+        */}
               <img
                 src={project.image}
                 alt={`${project.title} screenshot`}
                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                /*
-                  object-cover → fills the panel, cropping if needed
-                  object-top   → shows the top of the screenshot (the hero)
-                  group-hover:scale-105 → slow zoom on hover — cinematic feel
-                  duration-700 → 700ms — slower than grid cards, more dramatic
-                */
               />
-              {/* Left-side gradient overlay — blends image into card content */}
-              <div className="absolute inset-0 bg-gradient-to-r from-bg-surface/40 via-transparent to-transparent" />
-              {/*
-                gradient goes left → right
-                from-bg-surface/40 → semi-dark on the left edge
-                via-transparent    → fades to nothing in the middle
-                creates a smooth blend between the content panel and image
-              */}
-            </>
-          ) : (
-            /* Fallback if no image */
-            <>
-              <div className="absolute inset-0 bg-gradient-to-br from-brand/10 to-gold/5" />
-              <span className="relative text-[80px] font-bold font-display text-text-primary/5 select-none m-auto">
-                {project.title
-                  .split(" ")
-                  .map((word) => word[0])
-                  .join("")
-                  .slice(0, 3)
-                  .toUpperCase()}
-              </span>
-            </>
+              {/* Bottom gradient blends into card content */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-bg-surface/60" />
+            </div>
           )}
-        </div>
+
+          {/* Desktop image panel — hidden on mobile, shown on lg+ */}
+          <div className="hidden lg:flex lg:w-[320px] flex-shrink-0 relative overflow-hidden">
+            {project.image ? (
+              <>
+                <img
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-bg-surface/40 via-transparent to-transparent" />
+              </>
+            ) : (
+              <>
+                <div className="absolute inset-0 bg-gradient-to-br from-brand/10 to-gold/5" />
+                <span className="relative text-[80px] font-bold font-display text-text-primary/5 select-none m-auto">
+                  {project.title
+                    .split(" ")
+                    .map((word) => word[0])
+                    .join("")
+                    .slice(0, 3)
+                    .toUpperCase()}
+                </span>
+              </>
+            )}
+          </div>
+        </>
       )}
     </motion.article>
   );
