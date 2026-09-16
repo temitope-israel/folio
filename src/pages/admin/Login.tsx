@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 // useNavigate = programmatically navigate to a different route in code
 import { motion } from "framer-motion";
 import { Lock, User, Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
-import {loginAdmin, saveToken, isAuthenticated} from "@/lib/api";
-import { useEffect } from "react";
+import { loginAdmin, saveToken } from "@/lib/api";
+// import { useEffect } from "react";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
