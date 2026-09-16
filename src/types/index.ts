@@ -48,6 +48,7 @@ export interface Project {
     github?: string; // ? makes it optional
     featured: boolean; // true = show in the features section at the top of Projects else show only in the full grid
     status: "live" | "in-progress" | "planned";
+    image?: string;
     // Inline union type - this property can only be one of these three strings.
     // "live" = deployed and working
     // "in-progress" - currently building
