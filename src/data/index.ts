@@ -131,6 +131,19 @@ export const projects: Project[] = [
         image: "/projects/classyart-interior.png",
     },
     {
+        id: "misa_limited",
+        title: "MISA Limited",
+        tagline: "Real Estate & Property Development",
+        description: "A landing page redesign for a Lagos-based real estate and property development company, showcasing developments and services. Built with React, TypeScript, Tailwind CSS v4, and Framer Motion.",
+        tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        category: "frontend",
+        live: "https://misaltd.vercel.app/", // update with your actual deployed URL
+        github: "https://github.com/temitope-israel/misa-redesign", // update with your actual repo
+        featured: false,
+        status: "live",
+        image: "/projects/misa-limited.png",
+    },
+    {
         id: "ekklesia",
         title: "Ekklesia",
         tagline: "Church management platform",
@@ -148,7 +161,7 @@ export const projects: Project[] = [
 // ===== =======================================
 
 export const techStack: TechItem[] = [
-    { name: "React 19", category: "frontend" },
+    { name: "React", category: "frontend" },
     { name: "Next.js", category: "frontend" },
     { name: "TypeScript", category: "frontend" },
     { name: "Tailwind CSS", category: "frontend" },
