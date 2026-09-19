@@ -31,7 +31,7 @@ const transporter = nodemailer.createTransport({
 // .verify() tests the SMTP conn without sending anything
 // We call it immediately when the module loads so we know at
 // startup if credentials are wrong - rather than discovering when
-// the first email fails.
+// the first email fails....
 
 
 transporter.verify((error) => {
