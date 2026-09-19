@@ -3,7 +3,7 @@
 // Components import functions from here — they never write fetch() directly.
 // If the API URL changes, you update it here, not in every component.
 
-const BASE_URL = (import.meta as any).env?.VITE_API_URL || "http://localhost:4000/api";
+const BASE_URL = (import.meta as any).env?.VITE_API_URL ?? "http://localhost:4000/api";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
