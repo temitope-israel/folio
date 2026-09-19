@@ -73,7 +73,7 @@ export const submitContact = async (
       message: "Message received! I'll get back to you within 24 hours.",
     });
 
-  } catch (error) {
+  } catch (error: any) {
     next(error);
   }
 };
