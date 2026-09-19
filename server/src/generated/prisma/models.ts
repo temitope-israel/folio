@@ -8,6 +8,6 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Message'
-export type * from './models/PageVisit'
-export type * from './commonInputTypes'
+export type * from './models/Message.js'
+export type * from './models/PageVisit.js'
+export type * from './commonInputTypes.js'

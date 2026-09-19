@@ -147,8 +147,8 @@ app.post("/api/seed-visits", async (req, res) => {
     const pages = ["/", "/", "/", "#projects", "#about", "#contact"];
     const devices = ["desktop", "desktop", "mobile", "mobile", "tablet"];
 
-    for (let i = 0; i < 66; i++) {
-      const daysAgo = Math.floor(Math.random() * 23) + 8;
+    for (let i = 0; i < 20; i++) {
+      const daysAgo = Math.floor(Math.random() * 3) + 8;
       const date = new Date();
       date.setDate(date.getDate() - daysAgo);
       date.setHours(Math.floor(Math.random() * 24));
@@ -159,7 +159,7 @@ app.post("/api/seed-visits", async (req, res) => {
       });
     }
 
-    for (let i = 0; i < 23; i++) {
+    for (let i = 0; i < 3; i++) {
       const daysAgo = Math.floor(Math.random() * 7);
       const date = new Date();
       date.setDate(date.getDate() - daysAgo);
