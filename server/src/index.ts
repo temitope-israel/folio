@@ -51,7 +51,7 @@ app.use(helmet());
 // Registered FIRST so security headers are on every response.
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: process.env.FRONTEND_URL ?? "http://localhost:5173",
   // origin → which frontend URLs are allowed to make requests.
   // In development: http://localhost:3000 (our Vite dev server).
   // In production: set FRONTEND_URL to your Vercel URL.
