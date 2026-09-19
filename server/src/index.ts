@@ -50,20 +50,42 @@ app.use(helmet());
 // helmet() → applies ~15 security HTTP headers in one call.
 // Registered FIRST so security headers are on every response.
 
-app.use(cors({
-  origin: process.env.FRONTEND_URL ?? "http://localhost:5173",
-  // origin → which frontend URLs are allowed to make requests.
-  // In development: http://localhost:3000 (our Vite dev server).
-  // In production: set FRONTEND_URL to your Vercel URL.
-  // Requests from any OTHER origin will be blocked by the browser.
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  // methods → which HTTP methods are allowed.
-  // OPTIONS → required for CORS preflight requests (browser sends
-  //           OPTIONS before the actual request to check permissions).
-  credentials: true,
-  // credentials: true → allow cookies and Authorization headers.
-  // Needed for JWT authentication (Day 23).
-}));
+
+
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://temitopeomoniyi.vercel.app',
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or Postman)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+  })
+);
+// app.use(cors({
+//   origin: process.env.FRONTEND_URL ?? "http://localhost:5173",
+//   // origin → which frontend URLs are allowed to make requests.
+//   // In development: http://localhost:3000 (our Vite dev server).
+//   // In production: set FRONTEND_URL to your Vercel URL.
+//   // Requests from any OTHER origin will be blocked by the browser.
+//   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//   // methods → which HTTP methods are allowed.
+//   // OPTIONS → required for CORS preflight requests (browser sends
+//   //           OPTIONS before the actual request to check permissions).
+//   credentials: true,
+//   // credentials: true → allow cookies and Authorization headers.
+//   // Needed for JWT authentication (Day 23).
+// }));
 
 app.use(express.json({ limit: "10kb" }));
 // express.json() → parses incoming request bodies as JSON.
