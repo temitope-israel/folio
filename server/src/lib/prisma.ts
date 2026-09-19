@@ -1,5 +1,6 @@
 // prisma.ts — full Prisma 7 version
 
+import "dotenv/config";
 import { PrismaClient } from "../generated/prisma/client";
 // Generated client — Prisma 7 outputs here instead of node_modules
 
@@ -9,6 +10,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
+  ssl: { rejectUnauthorized: false },
   // Reads the same DATABASE_URL from your .env
   // "!" = TypeScript non-null assertion (we know it exists)
 });

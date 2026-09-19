@@ -31,6 +31,10 @@ import messagesRouter from "./routes/messages";
 // APP INITIALIZATION
 // ============================================================
 
+
+
+
+
 const app = express();
 // express() → creates the Express application instance.
 // app is the object we attach middleware and routes to.
@@ -131,6 +135,48 @@ app.use("/api/analytics", analyticsRoutes);
 
 
 app.use("/api/messages", messagesRouter)
+
+import prisma from "./lib/prisma";
+
+// TEMPORARY SEED ROUTE — remove after use
+app.post("/api/seed-visits", async (req, res) => {
+  try {
+    await prisma.pageVisit.deleteMany({});
+
+    const visits: { page: string; device: string; createdAt: Date }[] = [];
+    const pages = ["/", "/", "/", "#projects", "#about", "#contact"];
+    const devices = ["desktop", "desktop", "mobile", "mobile", "tablet"];
+
+    for (let i = 0; i < 66; i++) {
+      const daysAgo = Math.floor(Math.random() * 23) + 8;
+      const date = new Date();
+      date.setDate(date.getDate() - daysAgo);
+      date.setHours(Math.floor(Math.random() * 24));
+      visits.push({
+        page: pages[Math.floor(Math.random() * pages.length)],
+        device: devices[Math.floor(Math.random() * devices.length)],
+        createdAt: date,
+      });
+    }
+
+    for (let i = 0; i < 23; i++) {
+      const daysAgo = Math.floor(Math.random() * 7);
+      const date = new Date();
+      date.setDate(date.getDate() - daysAgo);
+      date.setHours(Math.floor(Math.random() * 24));
+      visits.push({
+        page: pages[Math.floor(Math.random() * pages.length)],
+        device: devices[Math.floor(Math.random() * devices.length)],
+        createdAt: date,
+      });
+    }
+
+    await prisma.pageVisit.createMany({ data: visits });
+    res.json({ success: true, message: "Seeded 89 visits" });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
 
 // 404 handler — for routes that don't exist
 app.use((req, res) => {
